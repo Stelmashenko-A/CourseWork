@@ -14,6 +14,13 @@ namespace RestAPI
                 return View["index"];
             };
 
+            InitializeTweet();
+
+        }
+
+        protected void InitializeTweet()
+        {
+
             Get["/tweets/user_time_line/{id:long}/{count:int}"] = parameters =>
             {
                 var t = new Test("user_time_line");
@@ -28,7 +35,7 @@ namespace RestAPI
             Get["/tweets/user_time_line/{id:long}"] = parameters =>
             {
                 var t = new Test("user_time_line");
-                var l = new List<Test> { t, t, t,t,t };
+                var l = new List<Test> { t, t, t, t, t };
 
                 return new JavaScriptSerializer().Serialize(l);
             };
@@ -100,8 +107,9 @@ namespace RestAPI
             {
                 return 123456;
             };
-
         }
+
+        
     }
 
     public class Test
