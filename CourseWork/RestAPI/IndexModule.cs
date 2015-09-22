@@ -18,6 +18,8 @@ namespace RestAPI
 
             InitializeFilter();
 
+            InitializeUser();
+
         }
 
         protected void InitializeTweet()
@@ -88,7 +90,29 @@ namespace RestAPI
             };
         }
 
+        protected void InitializeUser()
+        {
+            Get["/user/{id:long}"] = parameters =>
+            {
+                return new JavaScriptSerializer().Serialize(new Test("user"));
+            };
 
+            Get["/user/{id:long}/filter/add/{filterName:alpha}"] = parameters =>
+            {
+                return new JavaScriptSerializer().Serialize(new Test(parameters.filterName));
+            };
+
+            Get["/user/{id:long}/filter/remove/{filterName:alpha}"] = parameters =>
+            {
+                return new JavaScriptSerializer().Serialize(new Test(parameters.filterName));
+            };
+            Get["/user/{id:long}/filter/all"] = parameters =>
+            {
+                var l = new List<Test> { new Test("F1"), new Test("F2"), new Test("f3") };
+                return new JavaScriptSerializer().Serialize(l);
+            };
+
+        }
         private List<Test> ListTest(int num, string s)
         {
             var t = new Test(s);
