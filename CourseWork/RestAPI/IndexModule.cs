@@ -25,79 +25,47 @@ namespace RestAPI
 
             Get["/tweets/user_time_line/{id:long}/{count:int}"] = parameters =>
             {
-                var t = new Test("user_time_line");
-                var l = new List<Test>();
-                for (var i = 0; i < parameters.count; i++)
-                {
-                    l.Add(t);
-                }
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
 
             Get["/tweets/user_time_line/{id:long}"] = parameters =>
             {
-                var t = new Test("user_time_line");
-                var l = new List<Test> { t, t, t, t, t };
 
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(5, "user_time_line"));
             };
 
             Get["/tweets/user_time_line_filtered/{id:long}/{count:int}"] = parameters =>
             {
-                var t = new Test("user_time_line_filtered");
-                var l = new List<Test>();
-                for (var i = 0; i < parameters.count; i++)
-                {
-                    l.Add(t);
-                }
-                return new JavaScriptSerializer().Serialize(l);
+
+
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line_filtered"));
             };
 
             Get["/tweets/user_time_line_filtered/{id:long}"] = parameters =>
             {
-                var t = new Test("user_time_line_filtered");
-                var l = new List<Test> { t, t, t, t, t };
-
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(5, "user_time_line_filtered"));
             };
 
 
             Get["/tweets/not_readed/{id:long}"] = parameters =>
             {
-                var t = new Test("not_readed");
-                var l = new List<Test> { t, t, t, t, t };
 
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(5, "not_readed"));
             };
 
             Get["/tweets/not_readed/{id:long}/{count:int}"] = parameters =>
             {
-                var t = new Test("not_readed");
-                var l = new List<Test>();
-                for (var i = 0; i < parameters.count; i++)
-                {
-                    l.Add(t);
-                }
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not_readed"));
             };
 
             Get["/tweets/not_readed_filtered/{id:long}"] = parameters =>
             {
-                var t = new Test("not_readed_filtered");
-                var l = new List<Test> { t, t, t, t, t };
-
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(5, "not_readed_filtered"));
             };
 
             Get["/tweets/not_readed_filtered/{id:long}/{count:int}"] = parameters =>
             {
-                var t = new Test("not_readed_filtered");
-                var l = new List<Test>();
-                for (var i = 0; i < parameters.count; i++)
-                {
-                    l.Add(t);
-                }
-                return new JavaScriptSerializer().Serialize(l);
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not_readed_filtered"));
             };
 
             Get["/tweets/last_readed_id"] = _ =>
@@ -121,7 +89,16 @@ namespace RestAPI
         }
 
 
-        
+        private List<Test> ListTest(int num, string s)
+        {
+            var t = new Test(s);
+            var l = new List<Test>();
+            for (var i = 0; i < num; i++)
+            {
+                l.Add(t);
+            }
+            return l;
+        }
         
     }
 
