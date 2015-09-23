@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nancy.Json;
+using Repository;
+using TestData;
 
 namespace RestAPI
 {
@@ -7,8 +9,11 @@ namespace RestAPI
 
     public class IndexModule : NancyModule
     {
+
+        IRepository<Test> repository = new TestRepository();
         public IndexModule()
         {
+            
             Get["/"] = parameters =>
             {
                 return View["index"];
@@ -33,7 +38,7 @@ namespace RestAPI
             Get["/tweets/user_time_line/{id:long}"] = parameters =>
             {
 
-                return new JavaScriptSerializer().Serialize(ListTest(5, "user_time_line"));
+                return new JavaScriptSerializer().Serialize(repository.GetAll(parameters.id));
             };
 
             Get["/tweets/user_time_line_filtered/{id:long}/{count:int}"] = parameters =>
@@ -126,14 +131,6 @@ namespace RestAPI
         
     }
 
-    public class Test
-    {
-        public Test(string field)
-        {
-            Field = field;
-        }
-
-        public string Field { get; private set; }
-    }
+    
 
 }
