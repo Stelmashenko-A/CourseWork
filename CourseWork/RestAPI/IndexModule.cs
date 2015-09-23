@@ -10,7 +10,7 @@ namespace RestAPI
     public class IndexModule : NancyModule
     {
 
-        IRepository<Test> repository = new TestRepository();
+        private IRepository<Test> repository = new TestRepository();
         public IndexModule()
         {
             
@@ -115,6 +115,13 @@ namespace RestAPI
             {
                 var l = new List<Test> { new Test("F1"), new Test("F2"), new Test("f3") };
                 return new JavaScriptSerializer().Serialize(l);
+            };
+
+            Get["/user/{id:long}/send_tweet/{value:alpha}"] = parameters =>
+            {
+                var t = new Test(parameters.value);
+                repository.Add(1, t);
+                return new JavaScriptSerializer().Serialize(t);
             };
 
         }
