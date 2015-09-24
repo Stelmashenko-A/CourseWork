@@ -68,8 +68,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="FilterModule.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TweetModule.cs" />
+    <Compile Include="UserModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\index.sshtml">
