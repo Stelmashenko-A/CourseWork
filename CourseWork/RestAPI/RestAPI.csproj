@@ -91,6 +91,10 @@
       <Project>{cb06a2af-2ba2-4eb4-ac1b-bf744b1a9ed0}</Project>
       <Name>Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Server\Server.csproj">
+      <Project>{b07fabb1-87e2-43d4-9464-5a4881bdba44}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestData\TestData.csproj">
       <Project>{9013aa64-5fae-4f07-a5f2-7674a9fb6e24}</Project>
       <Name>TestData</Name>
