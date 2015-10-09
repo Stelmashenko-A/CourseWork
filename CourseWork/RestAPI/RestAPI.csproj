@@ -71,6 +71,7 @@
     <Compile Include="FilterModule.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwitterAuthentificationModule.cs" />
     <Compile Include="TweetModule.cs" />
     <Compile Include="UserModule.cs" />
   </ItemGroup>
