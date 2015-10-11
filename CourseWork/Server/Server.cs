@@ -1,5 +1,4 @@
-﻿using System;
-using Quartz;
+﻿using Quartz;
 
 namespace Server
 {
@@ -7,7 +6,7 @@ namespace Server
     {
         public void Execute(IJobExecutionContext context)
         {
-            Console.Beep();
+          //  Console.Beep();
         }
     }
 }

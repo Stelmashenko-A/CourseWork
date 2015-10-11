@@ -10,6 +10,10 @@
             {
                 return View["index"];
             };
+            Post["/"] = parameters =>
+            {
+                return View["index"];
+            };
         }
     }
 }

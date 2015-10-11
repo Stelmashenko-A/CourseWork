@@ -13,26 +13,26 @@ namespace Repository
             //todo
         }
 
-        public IQueryable<Test> GetAll(int userId)
+        public IQueryable<Test> GetAll(long userId)
         {
             var l = new List<Test> {new Test("1"), new Test("2"), new Test("3")};
             return l.AsQueryable();
         }
 
-        public Test Get(int userId, int id)
+        public Test Get(long userId, long id)
         {
             return new Test(id.ToString());
         }
 
-        public void Delete(int userId,int id)
+        public void Delete(long userId, long id)
         {
         }
 
-        public void Save(int userId)
+        public void Save(long userId)
         {
         }
 
-        public void Add(int userId, Test obj)
+        public void Add(long userId, Test obj)
         {
             using (IDocumentStore store = new DocumentStore
             {

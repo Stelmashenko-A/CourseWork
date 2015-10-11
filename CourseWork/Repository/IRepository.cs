@@ -5,10 +5,10 @@ namespace Repository
 {
     public interface IRepository<T> : IDisposable
     {
-        IQueryable<T> GetAll(int userId);
-        T Get(int userId, int id);
-        void Delete(int userId, int id);
-        void Save(int userId);
-        void Add(int userId, T obj);
+        IQueryable<T> GetAll(long userId);
+        T Get(long userId, long id);
+        void Delete(long userId, long id);
+        void Save(long userId);
+        void Add(long userId, T obj);
     }
 }

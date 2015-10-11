@@ -9,7 +9,7 @@ namespace Server
             var service = new TwitterService("",
                 "");
             var requestToken = service.GetRequestToken();
-            var uri = service.GetAuthorizationUri(requestToken);
+            var uri = service.GetAuthorizationUri(requestToken, "http://localhost:12008");
             return uri.ToString();
         }
 
