@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Raven.Abstractions.Commands;
 using Raven.Client;
 using Raven.Client.Document;
 
 namespace Repository
 {
-    class AccountRepository
+    public class AccountRepository:IDisposable
     {
         private readonly IDocumentStore _store;
 
@@ -68,5 +69,24 @@ namespace Repository
                 session.SaveChanges();
             }
         }
+
+       /* public long MaxId
+        {
+            get
+            {
+                using (var session = _store.OpenSession())
+                {
+                    try
+                    {
+                        return session.
+                    }
+                    catch (Exception)
+                    {
+
+                        return 0;
+                    }
+                }
+            }
+        }*/
     }
 }

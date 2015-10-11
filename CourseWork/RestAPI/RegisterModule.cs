@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Server;
 
 namespace RestAPI
 {
@@ -6,13 +7,12 @@ namespace RestAPI
     {
         public RegisterModule()
         {
-            Post["/"] = x =>
+            Post["/register"] = x =>
             {
                 var userName = (string) Request.Form.UserName;
                 var password = (string) Request.Form.Password;
-
-
-
+                var registrar = new Registrar();
+                registrar.TryRegistrate(userName, password);
                 return new
                 {
                     Token = ""

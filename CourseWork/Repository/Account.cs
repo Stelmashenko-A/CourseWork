@@ -2,15 +2,14 @@
 {
     public class Account
     {
-        public Account(long id, long username, long pass)
+        public Account(string username, string pass)
         {
-            Id = id;
             Username = username;
             Pass = pass;
         }
 
-        public long Id { get; private set; }
-        public long Username { get; private set; }
-        public long Pass { get; private set; }
+        public long Id { get; set; }
+        public string Username { get; private set; }
+        public string Pass { get; private set; }
     }
 }
