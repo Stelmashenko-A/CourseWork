@@ -6,10 +6,10 @@ namespace Server
     {
         public static string GetAuthorizationUri()
         {
-            var service = new TwitterService("",
-                "");
+            var service = new TwitterService("1WMZ0jYYuv8ZHrYI1L6hWN4m1",
+                "XYXajdaRgzMi11pIm5FM4WHc4xRzJPpPIwSMRMbACOEkOHEMDL");
             var requestToken = service.GetRequestToken();
-            var uri = service.GetAuthorizationUri(requestToken, "http://localhost:12008");
+            var uri = service.GetAuthorizationUri(requestToken, "http://localhost:12008/auth");
             return uri.ToString();
         }
 

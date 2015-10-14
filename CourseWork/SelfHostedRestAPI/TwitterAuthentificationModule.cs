@@ -2,7 +2,7 @@
 using Nancy.Json;
 using Server;
 
-namespace RestAPI
+namespace SelfHostedRestAPI
 {
     public class TwitterAuthentificationModule : NancyModule
     {
