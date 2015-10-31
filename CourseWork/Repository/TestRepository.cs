@@ -2,6 +2,7 @@
 using System.Linq;
 using Raven.Client;
 using Raven.Client.Document;
+using Repository.Model;
 using TestData;
 
 namespace Repository
@@ -13,26 +14,41 @@ namespace Repository
             //todo
         }
 
-        public IQueryable<Test> GetAll(long userId)
+        public IQueryable<Test> GetAll(Id userId)
         {
             var l = new List<Test> {new Test("1"), new Test("2"), new Test("3")};
             return l.AsQueryable();
         }
 
-        public Test Get(long userId, long id)
+        public IDictionary<Id, AccountInfo> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Test Get(Id userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Delete(Id userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Test Get(Id userId, Id id)
         {
             return new Test(id.ToString());
         }
 
-        public void Delete(long userId, long id)
+        public void Delete(Id userId, Id id)
         {
         }
 
-        public void Save(long userId)
+        public void Save(Id userId)
         {
         }
 
-        public void Add(long userId, Test obj)
+        public void Add(Id userId, Test obj)
         {
             using (IDocumentStore store = new DocumentStore
             {
@@ -40,7 +56,7 @@ namespace Repository
                 DefaultDatabase = "Test"   // default database
             })
             {
-                store.Initialize(); // initializes document store, by connecting to server and downloading various configurations
+                store.Initialize();
 
                 using (IDocumentSession session = store.OpenSession()) // opens a session that will work in context of 'DefaultDatabase'
                 {

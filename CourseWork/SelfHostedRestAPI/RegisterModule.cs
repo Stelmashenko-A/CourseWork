@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Nancy;
+﻿using Nancy;
 using Server;
 
 namespace SelfHostedRestAPI
 {
-    public class RegisterModule : NancyModule
+   /* public class RegisterModule : NancyModule
     {
         public RegisterModule()
         {
@@ -25,5 +21,5 @@ namespace SelfHostedRestAPI
 
 
         }
-    }
+    }*/
 }

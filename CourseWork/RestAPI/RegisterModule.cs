@@ -3,7 +3,7 @@ using Server;
 
 namespace RestAPI
 {
-    public class RegisterModule : NancyModule
+   /* public class RegisterModule : NancyModule
     {
         public RegisterModule()
         {
@@ -21,6 +21,6 @@ namespace RestAPI
 
 
         }
-    }
+    }*/
 
 }

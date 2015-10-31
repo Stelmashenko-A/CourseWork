@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Nancy;
 using Nancy.Json;
 using Repository;
+using Repository.Model;
 using TestData;
 
 namespace RestAPI
@@ -42,7 +43,7 @@ namespace RestAPI
             Get["/user/{id:long}/send_tweet/{value:alpha}"] = parameters =>
             {
                 var t = new Test(parameters.value);
-                _repository.Add(1, t);
+                _repository.Add(new Id(), t);
                 return new JavaScriptSerializer().Serialize(t);
             };
         }

@@ -3,7 +3,7 @@ using Repository;
 
 namespace Server
 {
-    public class Registrar
+   /* public class Registrar
     {
         public bool TryRegistrate(string userName, string password)
         {
@@ -20,5 +20,5 @@ namespace Server
             }
             return true;
         }
-    }
+    }*/
 }

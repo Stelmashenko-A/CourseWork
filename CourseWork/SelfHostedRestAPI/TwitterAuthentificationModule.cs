@@ -24,6 +24,10 @@ namespace SelfHostedRestAPI
             };
             Get["/auth"] = parameters =>
             {
+                var c = Request.Query;
+                string str1, str2;
+                long id;
+                TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out str1, out str2, out id);
                 return new JavaScriptSerializer().Serialize("pin");
             };
         }

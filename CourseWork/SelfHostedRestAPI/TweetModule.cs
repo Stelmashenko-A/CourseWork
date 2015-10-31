@@ -8,7 +8,7 @@ namespace SelfHostedRestAPI
 {
     public class TweetModule : NancyModule
     {
-        private readonly IRepository<Test> _repository = new TestRepository();
+        private readonly TestRepository _repository = new TestRepository();
 
         public TweetModule()
         {

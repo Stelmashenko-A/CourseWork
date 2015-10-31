@@ -1,6 +1,6 @@
 ﻿namespace Repository
 {
-    public class Account
+    public class Account 
     {
         public Account(string username, string pass)
         {

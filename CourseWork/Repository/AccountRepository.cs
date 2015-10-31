@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Raven.Abstractions.Commands;
 using Raven.Client;
 using Raven.Client.Document;
+using Repository.Model;
 
 namespace Repository
 {
-    public class AccountRepository:IDisposable
+    public class AccountRepository : IRepository<AccountInfo>
     {
         private readonly IDocumentStore _store;
 
@@ -22,38 +23,37 @@ namespace Repository
 
         public void Dispose()
         {
-            _store.Dispose();
+            //todo
         }
 
-        public IQueryable<Account> GetAll()
+        public IDictionary<Id, AccountInfo> GetAll()
         {
             using (var session = _store.OpenSession())
             {
-                var result =
-                    session.Query<Account>();
-                return result;
-            }    
-        }
 
-        public Account Get(long id)
-        {
-            using (var session = _store.OpenSession())
-            {
-                var result =
-                    session.Load<Account>(id);
-                return result;
+                return session.Query<AccountInfoStorage>().First().Data;
+
             }
         }
 
-        public void Delete(long id)
+        public AccountInfo Get(Id userId)
         {
             using (var session = _store.OpenSession())
             {
-                session.Advanced.Defer(new DeleteCommandData { Key = id.ToString() });
+                return session.Query<AccountInfoStorage>().First().Data[userId];
             }
         }
 
-        public void Save()
+        public void Delete(Id userId)
+        {
+            using (var session = _store.OpenSession())
+            {
+                session.Query<AccountInfoStorage>().First().Data.Remove(userId);
+                session.SaveChanges();
+            }
+        }
+
+        public void Save(Id userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -61,32 +61,19 @@ namespace Repository
             }
         }
 
-        public void Add(Account item)
+        public void Add(Id userId, AccountInfo obj)
         {
             using (var session = _store.OpenSession())
             {
-                session.Store(item);
-                session.SaveChanges();
-            }
-        }
-
-       /* public long MaxId
-        {
-            get
-            {
-                using (var session = _store.OpenSession())
+                if (session.Query<AccountInfoStorage>().First().Data.ContainsKey(userId))
                 {
-                    try
-                    {
-                        return session.
-                    }
-                    catch (Exception)
-                    {
-
-                        return 0;
-                    }
+                    throw new Exception(" add ");
                 }
+                session.Query<AccountInfoStorage>().First().Data.Add(userId, obj);
+                session.SaveChanges();
             }
-        }*/
+        }
     }
+
+    
 }
