@@ -6,10 +6,10 @@ namespace Repository
 {
     public interface IRepository<T> : IDisposable
     {
-        IDictionary<Id, AccountInfo> GetAll();
-        T Get(Id userId);
-        void Delete(Id userId);
-        void Save(Id userId);
-        void Add(Id userId, T obj);
+        IDictionary<ulong, AccountInfo> GetAll();
+        T Get(ulong userId);
+        void Delete(ulong userId);
+        void Save(ulong userId);
+        void Add(ulong userId, T obj);
     }
 }

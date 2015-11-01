@@ -2,7 +2,6 @@
 using Nancy;
 using Nancy.Json;
 using Repository;
-using Repository.Model;
 using TestData;
 
 namespace SelfHostedRestAPI
@@ -43,7 +42,7 @@ namespace SelfHostedRestAPI
             Get["/user/{id:long}/send_tweet/{value:alpha}"] = parameters =>
             {
                 var t = new Test(parameters.value);
-                _repository.Add(new Id(), t);
+                _repository.Add((1), t);
                 return new JavaScriptSerializer().Serialize(t);
             };
         }

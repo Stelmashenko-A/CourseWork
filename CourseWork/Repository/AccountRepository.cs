@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NetTopologySuite.Utilities;
 using Raven.Client;
 using Raven.Client.Document;
 using Repository.Model;
@@ -26,17 +27,17 @@ namespace Repository
             //todo
         }
 
-        public IDictionary<Id, AccountInfo> GetAll()
+        public IDictionary<ulong, AccountInfo> GetAll()
         {
             using (var session = _store.OpenSession())
             {
 
-                return session.Query<AccountInfoStorage>().First().Data;
+                return session.Load<AccountInfoStorage>("AccountInfoStorages/129").Data;
 
             }
         }
 
-        public AccountInfo Get(Id userId)
+        public AccountInfo Get(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -44,7 +45,7 @@ namespace Repository
             }
         }
 
-        public void Delete(Id userId)
+        public void Delete(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -53,7 +54,7 @@ namespace Repository
             }
         }
 
-        public void Save(Id userId)
+        public void Save(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -61,15 +62,23 @@ namespace Repository
             }
         }
 
-        public void Add(Id userId, AccountInfo obj)
+        public void Add(ulong userId, AccountInfo obj)
         {
+           
+
+               
+            
             using (var session = _store.OpenSession())
             {
-                if (session.Query<AccountInfoStorage>().First().Data.ContainsKey(userId))
+
+                var accountInfoStorage = session.Load<AccountInfoStorage>("AccountInfoStorages/129");
+
+                if (accountInfoStorage.Data.ContainsKey(userId))
                 {
                     throw new Exception(" add ");
                 }
-                session.Query<AccountInfoStorage>().First().Data.Add(userId, obj);
+                accountInfoStorage.Data.Add(userId,obj);
+                session.Store(accountInfoStorage);
                 session.SaveChanges();
             }
         }

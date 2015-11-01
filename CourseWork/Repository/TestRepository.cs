@@ -14,41 +14,41 @@ namespace Repository
             //todo
         }
 
-        public IQueryable<Test> GetAll(Id userId)
+        public IQueryable<Test> GetAll(ulong userId)
         {
             var l = new List<Test> {new Test("1"), new Test("2"), new Test("3")};
             return l.AsQueryable();
         }
 
-        public IDictionary<Id, AccountInfo> GetAll()
+        public IDictionary<ulong, AccountInfo> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public Test Get(Id userId)
+        public Test Get(ulong userId)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(Id userId)
+        public void Delete(ulong userId)
         {
             throw new System.NotImplementedException();
         }
 
-        public Test Get(Id userId, Id id)
+        public Test Get(ulong userId, ulong id)
         {
             return new Test(id.ToString());
         }
 
-        public void Delete(Id userId, Id id)
+        public void Delete(ulong userId, ulong id)
         {
         }
 
-        public void Save(Id userId)
+        public void Save(ulong userId)
         {
         }
 
-        public void Add(Id userId, Test obj)
+        public void Add(ulong userId, Test obj)
         {
             using (IDocumentStore store = new DocumentStore
             {

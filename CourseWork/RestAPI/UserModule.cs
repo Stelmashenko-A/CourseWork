@@ -7,7 +7,7 @@ using TestData;
 
 namespace RestAPI
 {
-    public class UserModule : NancyModule
+   /* public class UserModule : NancyModule
     {
 
         private readonly IRepository<Test> _repository = new TestRepository();
@@ -47,5 +47,5 @@ namespace RestAPI
                 return new JavaScriptSerializer().Serialize(t);
             };
         }
-    }
+    }*/
 }
