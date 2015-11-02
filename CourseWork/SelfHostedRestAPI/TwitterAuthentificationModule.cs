@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Nancy;
+﻿using Nancy;
 using Nancy.Json;
 using Repository;
 using Repository.Model;
@@ -28,17 +26,15 @@ namespace SelfHostedRestAPI
             };
             Get["/auth"] = parameters =>
             {
-                var c = Request.Query;
-                string str1, str2, userName;
+                string token, tokenSecret, userName;
                 ulong id;
-                TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out str1, out str2,
+
+                TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
+                    out tokenSecret,
                     out userName, out id);
                 var accountRepository = new AccountRepository();
 
-               // accountRepository.Add(id, new AccountInfo(new TwitterToken(str1, str2), userName, id));
-                Loader loader = new Loader();
-                loader.Load(accountRepository.GetAll(), "1WMZ0jYYuv8ZHrYI1L6hWN4m1",
-                "XYXajdaRgzMi11pIm5FM4WHc4xRzJPpPIwSMRMbACOEkOHEMDL");
+                accountRepository.Add(id, new AccountInfo(new TwitterToken(token, tokenSecret), userName, id));
                 return new JavaScriptSerializer().Serialize("pin");
             };
         }

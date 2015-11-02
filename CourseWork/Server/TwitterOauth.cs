@@ -6,8 +6,8 @@ namespace Server
     {
         public static string GetAuthorizationUri()
         {
-            var service = new TwitterService("1WMZ0jYYuv8ZHrYI1L6hWN4m1",
-                "XYXajdaRgzMi11pIm5FM4WHc4xRzJPpPIwSMRMbACOEkOHEMDL");
+            var service = new TwitterService(ConsumerToken.ConsumerKey,
+                ConsumerToken.ConsumerSecret);
             var requestToken = service.GetRequestToken();
             var uri = service.GetAuthorizationUri(requestToken, "http://192.168.0.9:12008/auth");
             return uri.ToString();
@@ -16,8 +16,8 @@ namespace Server
         public static string AuthorizeCallback(string oauthToken, string oauthVerifier)
         {
             var requestToken = new OAuthRequestToken {Token = oauthToken};
-            var service = new TwitterService("",
-                "");
+            var service = new TwitterService(ConsumerToken.ConsumerKey,
+                ConsumerToken.ConsumerSecret);
             var accessToken = service.GetAccessToken(requestToken, oauthVerifier);
             return accessToken.Token;
         }
@@ -26,8 +26,8 @@ namespace Server
             out string screenName, out ulong id)
         {
             var requestToken = new OAuthRequestToken {Token = oautToken};
-            var service = new TwitterService("1WMZ0jYYuv8ZHrYI1L6hWN4m1",
-                "XYXajdaRgzMi11pIm5FM4WHc4xRzJPpPIwSMRMbACOEkOHEMDL");
+            var service = new TwitterService(ConsumerToken.ConsumerKey,
+                ConsumerToken.ConsumerSecret);
             var accessToken = service.GetAccessToken(requestToken, verifier);
             token = accessToken.Token;
             tokenSecret = accessToken.TokenSecret;
