@@ -98,7 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerToken.cs" />
+    <Compile Include="ConsumerToken.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Registrar.cs" />
     <Compile Include="TwitterOauth.cs" />

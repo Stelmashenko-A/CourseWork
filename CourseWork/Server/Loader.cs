@@ -25,6 +25,7 @@ namespace Server
                 };
 
                 var twitterCtx = new TwitterContext(singleUserAuthorizer);
+                
                 var tweets =
                     await
                         (from tweet in twitterCtx.Status

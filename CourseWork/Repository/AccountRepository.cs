@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetTopologySuite.Utilities;
 using Raven.Client;
 using Raven.Client.Document;
 using Repository.Model;
@@ -41,6 +40,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
+
                 return session.Query<AccountInfoStorage>().First().Data[userId];
             }
         }
@@ -64,13 +64,16 @@ namespace Repository
 
         public void Add(ulong userId, AccountInfo obj)
         {
-           
-
-               
-            
             using (var session = _store.OpenSession())
             {
 
+                session.Query<AccountInfoStorage>().First().Data.Add(userId,obj);
+                session.SaveChanges();
+            }
+          /*  using (var session = _store.OpenSession())
+            {
+                //поиск элемента
+                
                 var accountInfoStorage = session.Load<AccountInfoStorage>("AccountInfoStorages/129");
 
                 if (accountInfoStorage.Data.ContainsKey(userId))
@@ -80,7 +83,7 @@ namespace Repository
                 accountInfoStorage.Data.Add(userId,obj);
                 session.Store(accountInfoStorage);
                 session.SaveChanges();
-            }
+            }*/
         }
     }
 
