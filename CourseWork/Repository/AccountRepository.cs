@@ -7,7 +7,7 @@ using Repository.Model;
 
 namespace Repository
 {
-    public class AccountRepository : IRepository<AccountInfo>
+    public class AccountRepository : IRepository<Model.Account>
     {
         private readonly IDocumentStore _store;
 
@@ -26,22 +26,22 @@ namespace Repository
             //todo
         }
 
-        public IDictionary<ulong, AccountInfo> GetAll()
+        public IDictionary<ulong, Model.Account> GetAll()
         {
             using (var session = _store.OpenSession())
             {
 
-                return session.Load<AccountInfoStorage>("AccountInfoStorages/129").Data;
+                return session.Load<Storage>("AccountInfoStorages/129").Data;
 
             }
         }
 
-        public AccountInfo Get(ulong userId)
+        public Model.Account Get(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
 
-                return session.Query<AccountInfoStorage>().First().Data[userId];
+                return session.Query<Storage>().First().Data[userId];
             }
         }
 
@@ -49,7 +49,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                session.Query<AccountInfoStorage>().First().Data.Remove(userId);
+                session.Query<Storage>().First().Data.Remove(userId);
                 session.SaveChanges();
             }
         }
@@ -62,19 +62,19 @@ namespace Repository
             }
         }
 
-        public void Add(ulong userId, AccountInfo obj)
+        public void Add(ulong userId, Model.Account obj)
         {
             using (var session = _store.OpenSession())
             {
 
-                session.Query<AccountInfoStorage>().First().Data.Add(userId,obj);
+                session.Query<Storage>().First().Data.Add(userId,obj);
                 session.SaveChanges();
             }
           /*  using (var session = _store.OpenSession())
             {
                 //поиск элемента
                 
-                var accountInfoStorage = session.Load<AccountInfoStorage>("AccountInfoStorages/129");
+                var accountInfoStorage = session.Load<Storage>("AccountInfoStorages/129");
 
                 if (accountInfoStorage.Data.ContainsKey(userId))
                 {

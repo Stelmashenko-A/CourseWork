@@ -6,7 +6,7 @@ namespace Repository
 {
     public interface IRepository<T> : IDisposable
     {
-        IDictionary<ulong, AccountInfo> GetAll();
+        IDictionary<ulong, Model.Account> GetAll();
         T Get(ulong userId);
         void Delete(ulong userId);
         void Save(ulong userId);

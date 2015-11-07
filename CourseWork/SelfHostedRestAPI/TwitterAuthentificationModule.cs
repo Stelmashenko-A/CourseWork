@@ -3,6 +3,7 @@ using Nancy.Json;
 using Repository;
 using Repository.Model;
 using Server;
+using Account = Repository.Model.Account;
 
 namespace SelfHostedRestAPI
 {
@@ -34,7 +35,7 @@ namespace SelfHostedRestAPI
                     out userName, out id);
                 var accountRepository = new AccountRepository();
 
-                accountRepository.Add(id, new AccountInfo(new TwitterToken(token, tokenSecret), userName, id));
+                accountRepository.Add(id, new Account(new TwitterToken(token, tokenSecret), userName, id));
                 return new JavaScriptSerializer().Serialize("pin");
             };
         }

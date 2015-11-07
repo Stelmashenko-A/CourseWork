@@ -2,12 +2,13 @@
 using System.Linq;
 using LinqToTwitter;
 using Repository.Model;
+using Account = Repository.Model.Account;
 
 namespace Server
 {
     public class Loader
     {
-        public async void Load(IDictionary<ulong, AccountInfo> list, string consumerKey, string consumerSecret)
+        public async void Load(IDictionary<ulong, Account> list, string consumerKey, string consumerSecret)
         {
             foreach (var info in list.Values)
             {

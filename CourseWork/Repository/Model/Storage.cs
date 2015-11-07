@@ -2,20 +2,20 @@
 
 namespace Repository.Model
 {
-    class AccountInfoStorage
+    class Storage
     {
         public string Id { get; set; }
-        public Dictionary<ulong, AccountInfo> Data { get; set; }
+        public Dictionary<ulong, Account> Data { get; set; }
 
-        public AccountInfoStorage()
+        public Storage()
         {
-            Data=new Dictionary<ulong, AccountInfo>();
+            Data=new Dictionary<ulong, Account>();
         }
     }
 
-    public class AccountInfo
+    public class Account
     {
-        public AccountInfo(TwitterToken tokens, string screenName, ulong userId)
+        public Account(TwitterToken tokens, string screenName, ulong userId)
         {
             Tokens = tokens;
             ScreenName = screenName;

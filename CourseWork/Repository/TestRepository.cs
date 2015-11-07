@@ -20,7 +20,7 @@ namespace Repository
             return l.AsQueryable();
         }
 
-        public IDictionary<ulong, AccountInfo> GetAll()
+        public IDictionary<ulong, Model.Account> GetAll()
         {
             throw new System.NotImplementedException();
         }
