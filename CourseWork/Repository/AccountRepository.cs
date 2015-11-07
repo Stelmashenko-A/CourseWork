@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Raven.Client;
 using Raven.Client.Document;
@@ -7,7 +6,7 @@ using Repository.Model;
 
 namespace Repository
 {
-    public class AccountRepository : IRepository<Model.Account>
+    public class AccountRepository : IRepository<Account>
     {
         private readonly IDocumentStore _store;
 
@@ -26,17 +25,17 @@ namespace Repository
             //todo
         }
 
-        public IDictionary<ulong, Model.Account> GetAll()
+        public IDictionary<ulong, Account> GetAll()
         {
             using (var session = _store.OpenSession())
             {
 
-                return session.Load<Storage>("AccountInfoStorages/129").Data;
+                return session.Query<Storage>().First().Data;
 
             }
         }
 
-        public Model.Account Get(ulong userId)
+        public Account Get(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -62,12 +61,13 @@ namespace Repository
             }
         }
 
-        public void Add(ulong userId, Model.Account obj)
+        public void Add(ulong userId, Account obj)
         {
+
             using (var session = _store.OpenSession())
             {
-
-                session.Query<Storage>().First().Data.Add(userId,obj);
+                var s = session.Query<Storage>().First();
+                s.Data.Add(userId,obj);
                 session.SaveChanges();
             }
           /*  using (var session = _store.OpenSession())

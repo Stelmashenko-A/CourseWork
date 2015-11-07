@@ -1,42 +1,42 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LinqToTwitter;
-using Repository.Model;
 using Account = Repository.Model.Account;
+
 
 namespace Server
 {
     public class Loader
     {
-        public async void Load(IDictionary<ulong, Account> list, string consumerKey, string consumerSecret)
+        public List<Status> Load(Account account)
         {
-            foreach (var info in list.Values)
+          var singleUserAuthorizer = new SingleUserAuthorizer
             {
-                var singleUserAuthorizer = new SingleUserAuthorizer
+                CredentialStore = new InMemoryCredentialStore
                 {
-                    CredentialStore = new InMemoryCredentialStore
-                    {
-                        ConsumerKey = consumerKey,
-                        ConsumerSecret = consumerSecret,
-                        OAuthToken = info.Tokens.Token,
-                        OAuthTokenSecret = info.Tokens.TokenSecret,
-                        ScreenName = info.ScreenName,
-                        UserID = info.UserId
-                    }
-                };
+                    ConsumerKey = ConsumerToken.ConsumerKey,
+                    ConsumerSecret = ConsumerToken.ConsumerSecret,
+                    OAuthToken = account.Tokens.Token,
+                    OAuthTokenSecret = account.Tokens.TokenSecret,
+                    ScreenName = account.ScreenName,
+                    UserID = account.UserId
+                }
+            };
 
-                var twitterCtx = new TwitterContext(singleUserAuthorizer);
-                
-                var tweets =
-                    await
-                        (from tweet in twitterCtx.Status
-                            where tweet.Type == StatusType.User &&
-                                  tweet.ScreenName == info.ScreenName &&
-                                  tweet.Count == 200
-                            select tweet)
-                            .ToListAsync();
-            }
+            var twitterCtx = new TwitterContext(singleUserAuthorizer);
+
+            var tmp =
+
+                (from tweet in twitterCtx.Status
+                    where tweet.Type == StatusType.User &&
+                          tweet.ScreenName == account.ScreenName &&
+                          tweet.SinceID == account.TimeLine.MaxId()
+                    select tweet).ToListAsync();
+            tmp.Wait();
+            return tmp.Result ;
 
         }
+
+
     }
 }

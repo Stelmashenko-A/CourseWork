@@ -21,9 +21,15 @@ namespace Repository.Model
             }
         }
 
-        public ulong MaxId => Statuses.Max().ID;
+        public ulong MaxId()
+        {
+            return Statuses.Count == 0 ? 1 : Statuses.Max().ID;
+        }
 
-        public int Count => Statuses.Count;
+        public int Count()
+        {
+            return Statuses.Count;
+        }
 
         public Status At(ulong id)
         {

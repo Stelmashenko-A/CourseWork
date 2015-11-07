@@ -89,6 +89,7 @@
     <Compile Include="Account.cs" />
     <Compile Include="AccountRepository.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="Model\Account.cs" />
     <Compile Include="Model\StatusByIdComparer.cs" />
     <Compile Include="Model\Storage.cs" />
     <Compile Include="Model\TimeLine.cs" />
