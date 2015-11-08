@@ -24,4 +24,16 @@ namespace Server.Test
             Assert.AreEqual(123, t.Count);
         }
     }
+    [TestClass]
+    public class InitializerTests
+    {
+        [TestMethod]
+        public void TestLoadStatuses()
+        {
+            var initializer = new Initializer();
+            var accountRepository = new AccountRepository();
+            var t = initializer.LoadStatuses(accountRepository.GetTwitterCredentials(2765688547));
+            Assert.AreEqual(1631, t.Count);
+        }
+    }
 }
