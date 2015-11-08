@@ -8,9 +8,9 @@ namespace Server
 {
     public class Loader
     {
-        public List<Status> Load(Account account)
+        protected TwitterContext BuildTwitterContext(Account account)
         {
-          var singleUserAuthorizer = new SingleUserAuthorizer
+            var singleUserAuthorizer = new SingleUserAuthorizer
             {
                 CredentialStore = new InMemoryCredentialStore
                 {
@@ -23,20 +23,21 @@ namespace Server
                 }
             };
 
-            var twitterCtx = new TwitterContext(singleUserAuthorizer);
+            return new TwitterContext(singleUserAuthorizer);
+        }
 
-            var tmp =
-
+        public List<Status> Load(Account account, int count = 20)
+        {
+            var twitterCtx = BuildTwitterContext(account);
+            var tweetTask =
                 (from tweet in twitterCtx.Status
                     where tweet.Type == StatusType.User &&
                           tweet.ScreenName == account.ScreenName &&
-                          tweet.SinceID == account.TimeLine.MaxId()
+                          tweet.SinceID == account.TimeLine.MaxId() &&
+                          tweet.Count == count
                     select tweet).ToListAsync();
-            tmp.Wait();
-            return tmp.Result ;
-
+            tweetTask.Wait();
+            return tweetTask.Result;
         }
-
-
     }
 }
