@@ -12,7 +12,6 @@ namespace SelfHostedRestAPI
         // For more information https://github.com/NancyFx/Nancy/wiki/Bootstrapper
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            // your customization goes here
             Server.ServerScheduler.Start();
         }
     }

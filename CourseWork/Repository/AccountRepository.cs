@@ -29,9 +29,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-
                 return session.Query<Storage>().First().Data;
-
             }
         }
 
@@ -39,11 +37,29 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-
                 return session.Query<Storage>().First().Data[userId];
             }
         }
 
+        public TwitterCredentials GetTwitterCredentials(ulong userId)
+        {
+            using (var session = _store.OpenSession())
+            {
+                return session.Query<Storage>().First().Data[userId].TwitterCredentials;
+            }
+        }
+
+        public IList<TwitterCredentials> GetAllTwitterCredentialses()
+        {
+            using (var session = _store.OpenSession())
+            {
+                return
+                    session.Query<Storage>()
+                        .First()
+                        .Data.Values.Select(variable => variable.TwitterCredentials)
+                        .ToList();
+            }
+        }
         public void Delete(ulong userId)
         {
             using (var session = _store.OpenSession())
@@ -63,28 +79,15 @@ namespace Repository
 
         public void Add(ulong userId, Account obj)
         {
-
             using (var session = _store.OpenSession())
             {
                 var s = session.Query<Storage>().First();
                 s.Data.Add(userId,obj);
                 session.SaveChanges();
             }
-          /*  using (var session = _store.OpenSession())
-            {
-                //поиск элемента
-                
-                var accountInfoStorage = session.Load<Storage>("AccountInfoStorages/129");
-
-                if (accountInfoStorage.Data.ContainsKey(userId))
-                {
-                    throw new Exception(" add ");
-                }
-                accountInfoStorage.Data.Add(userId,obj);
-                session.Store(accountInfoStorage);
-                session.SaveChanges();
-            }*/
         }
+
+        
     }
 
     

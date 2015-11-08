@@ -2,19 +2,13 @@
 {
     public class Account
     {
-        public Account(TwitterToken tokens, string screenName, ulong userId)
+        public Account(TwitterCredentials twitterCredentials)
         {
-            Tokens = tokens;
-            ScreenName = screenName;
-            UserId = userId;
-            TimeLine=new TimeLine();
+            TwitterCredentials = twitterCredentials;
+            TimeLine = new TimeLine();
         }
 
-        public TwitterToken Tokens { get; protected set; }
-
-        public string ScreenName { get; protected set; }
-
-        public ulong UserId { get; protected set; }
+        public TwitterCredentials TwitterCredentials { get; private set; }
 
         public TimeLine TimeLine { get; private set; }
     }

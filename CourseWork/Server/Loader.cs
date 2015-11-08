@@ -16,10 +16,10 @@ namespace Server
                 {
                     ConsumerKey = ConsumerToken.ConsumerKey,
                     ConsumerSecret = ConsumerToken.ConsumerSecret,
-                    OAuthToken = account.Tokens.Token,
-                    OAuthTokenSecret = account.Tokens.TokenSecret,
-                    ScreenName = account.ScreenName,
-                    UserID = account.UserId
+                    OAuthToken = account.TwitterCredentials.Tokens.Token,
+                    OAuthTokenSecret = account.TwitterCredentials.Tokens.TokenSecret,
+                    ScreenName = account.TwitterCredentials.ScreenName,
+                    UserID = account.TwitterCredentials.UserId
                 }
             };
 
@@ -32,7 +32,7 @@ namespace Server
             var tweetTask =
                 (from tweet in twitterCtx.Status
                     where tweet.Type == StatusType.User &&
-                          tweet.ScreenName == account.ScreenName &&
+                          tweet.ScreenName == account.TwitterCredentials.ScreenName &&
                           tweet.SinceID == account.TimeLine.MaxId() &&
                           tweet.Count == count
                     select tweet).ToListAsync();
