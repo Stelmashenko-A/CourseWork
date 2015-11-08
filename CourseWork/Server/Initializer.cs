@@ -2,6 +2,7 @@
 using System.Linq;
 using LinqToTwitter;
 using Repository.Model;
+using Account = LinqToTwitter.Account;
 
 namespace Server
 {
@@ -11,6 +12,8 @@ namespace Server
         {
             var contextBuilder = new TwitterContextBuilder();
             var twitterContext = contextBuilder.Build(credentials);
+            
+;
             var statuses = new List<Status>();
             var tweetTask =
                 (from tweet in twitterContext.Status
