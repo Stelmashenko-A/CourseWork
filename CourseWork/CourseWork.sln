@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfHostedRestAPI", "SelfHostedRestAPI\SelfHostedRestAPI.csproj", "{03829364-83E2-431F-925E-675ED61CFF79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Test", "Repository.Test\Repository.Test.csproj", "{910263FD-CBFC-443B-BAD2-5DF3D3F82266}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Test", "Server.Test\Server.Test.csproj", "{B4A010F2-AD2A-4A36-98CA-D88EE670F0A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{03829364-83E2-431F-925E-675ED61CFF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03829364-83E2-431F-925E-675ED61CFF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03829364-83E2-431F-925E-675ED61CFF79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{910263FD-CBFC-443B-BAD2-5DF3D3F82266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{910263FD-CBFC-443B-BAD2-5DF3D3F82266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{910263FD-CBFC-443B-BAD2-5DF3D3F82266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{910263FD-CBFC-443B-BAD2-5DF3D3F82266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4A010F2-AD2A-4A36-98CA-D88EE670F0A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A010F2-AD2A-4A36-98CA-D88EE670F0A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A010F2-AD2A-4A36-98CA-D88EE670F0A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A010F2-AD2A-4A36-98CA-D88EE670F0A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
