@@ -7,7 +7,7 @@ namespace Repository.Model
     {
         public int Compare(Status x, Status y)
         {
-            return x.ID.CompareTo(y.ID);
+            return x.ID.CompareTo(y.StatusID);
         }
     }
 }

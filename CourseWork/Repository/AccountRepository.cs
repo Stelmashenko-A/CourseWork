@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LinqToTwitter;
 using Raven.Client;
 using Raven.Client.Document;
 using Repository.Model;
+using Account = Repository.Model.Account;
 
 namespace Repository
 {
@@ -60,6 +62,7 @@ namespace Repository
                         .ToList();
             }
         }
+
         public void Delete(ulong userId)
         {
             using (var session = _store.OpenSession())
@@ -82,13 +85,26 @@ namespace Repository
             using (var session = _store.OpenSession())
             {
                 var s = session.Query<Storage>().First();
-                s.Data.Add(userId,obj);
+                s.Data.Add(userId, obj);
                 session.SaveChanges();
             }
         }
 
-        
+        public void SetUserStatuses(ulong userId, List<Status> userStatuses)
+        {
+            using (var session = _store.OpenSession())
+            {
+                session.Query<Storage>().First().Data[userId].UserStatuses.Statuses.AddRange(userStatuses);
+                session.SaveChanges();
+            }
+        }
+        public void DelUserStatuses(ulong userId)
+        {
+            using (var session = _store.OpenSession())
+            {
+                session.Query<Storage>().First().Data[userId].UserStatuses.Statuses.Clear();
+                session.SaveChanges();
+            }
+        }
     }
-
-    
 }

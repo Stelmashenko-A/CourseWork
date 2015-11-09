@@ -16,7 +16,7 @@ namespace Server
                 (from tweet in twitterCtx.Status
                     where tweet.Type == StatusType.User &&
                           tweet.ScreenName == account.TwitterCredentials.ScreenName &&
-                          tweet.SinceID == account.TimeLine.MaxId() &&
+                          tweet.SinceID == account.UserStatuses.MaxId() &&
                           tweet.Count == count
                     select tweet).ToListAsync();
             tweetTask.Wait();

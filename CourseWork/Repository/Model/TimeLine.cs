@@ -6,7 +6,12 @@ namespace Repository.Model
 {
     public class TimeLine
     {
-        protected SortedSet<Status> Statuses = new SortedSet<Status>(new StatusByIdComparer());
+        public List<Status> Statuses;
+
+        public TimeLine()
+        {
+            Statuses=new List<Status>();
+        }
 
         public void AddStatus(Status status)
         {
