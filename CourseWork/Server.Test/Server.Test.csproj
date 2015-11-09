@@ -98,6 +98,10 @@
       <Project>{b07fabb1-87e2-43d4-9464-5a4881bdba44}</Project>
       <Name>Server</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TestUtiles\TestUtiles.csproj">
+      <Project>{17FE3872-826A-4A1E-A6FE-80249D0728EF}</Project>
+      <Name>TestUtiles</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

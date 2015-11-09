@@ -1,21 +1,23 @@
 ﻿using System.Linq;
+using LinqToTwitter;
+using Repository;
 using Server;
 
 namespace TestUtiles
 {
     public class StatusCounter
     {
-        public int Count(ulong userId)
+        public int Count(ulong userId, AccountRepository accountRepository)
         {
             var contextBuilder = new TwitterContextBuilder();
             var twitterContext = contextBuilder.Build(accountRepository.GetTwitterCredentials(2765688547));
             var userResponse =
                 (from user in twitterContext.User
-                 where user.Type == UserType.Lookup &&
-                       user.UserIdList == "2765688547"
-                 select user).ToListAsync();
+                    where user.Type == UserType.Lookup &&
+                          user.UserIdList == userId.ToString()
+                    select user).ToListAsync();
             userResponse.Wait();
-            var statusesCount = userResponse.Result[0].StatusesCount;
+            return userResponse.Result[0].StatusesCount;
         }
     }
 }

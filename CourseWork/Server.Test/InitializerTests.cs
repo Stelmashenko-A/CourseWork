@@ -2,6 +2,7 @@
 using LinqToTwitter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repository;
+using TestUtiles;
 
 namespace Server.Test
 {
@@ -17,16 +18,8 @@ namespace Server.Test
             var credentials = accountRepository.GetTwitterCredentials(2765688547);
             var statuses = initializer.LoadStatuses(credentials);
 
-            var contextBuilder = new TwitterContextBuilder();
-            var twitterContext = contextBuilder.Build(accountRepository.GetTwitterCredentials(2765688547));
-            var userResponse =
-                (from user in twitterContext.User
-                    where user.Type == UserType.Lookup &&
-                          user.UserIdList == "2765688547"
-                    select user).ToListAsync();
-            userResponse.Wait();
-            var statusesCount = userResponse.Result[0].StatusesCount;
-            Assert.AreEqual(statusesCount, statuses.Count);
+            var statusCounter = new StatusCounter();
+            Assert.AreEqual(statusCounter.Count(2765688547, accountRepository), statuses.Count);
         }
     }
 }
