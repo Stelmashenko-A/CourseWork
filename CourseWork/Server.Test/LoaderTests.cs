@@ -11,6 +11,7 @@ namespace Server.Test
         {
             var loader = new Loader();
             var accountRepository = new AccountRepository();
+            accountRepository.DelUserStatuses(2765688547);
             var t = loader.Load(accountRepository.Get(2765688547));
             Assert.AreEqual(20,t.Count);
         }
@@ -20,6 +21,7 @@ namespace Server.Test
         {
             var loader = new Loader();
             var accountRepository = new AccountRepository();
+            accountRepository.DelUserStatuses(2765688547);
             var t = loader.Load(accountRepository.Get(2765688547),123);
             Assert.AreEqual(123, t.Count);
         }

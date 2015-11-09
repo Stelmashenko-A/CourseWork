@@ -100,8 +100,11 @@
   <ItemGroup>
     <Compile Include="ConsumerToken.cs" />
     <Compile Include="Initializer.cs" />
+    <Compile Include="StatusTasks\ITaskBuilder.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Registrar.cs" />
+    <Compile Include="StatusTasks\TaskTimeLineBuilder.cs" />
+    <Compile Include="StatusTasks\TaskUserStatusesBuilder.cs" />
     <Compile Include="TwitterContextBuilder.cs" />
     <Compile Include="TwitterOauth.cs" />
     <Compile Include="ServerScheduler.cs" />

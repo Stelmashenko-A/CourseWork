@@ -1,26 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using LinqToTwitter;
 using Repository.Model;
-using Account = LinqToTwitter.Account;
+using Server.StatusTasks;
 
 namespace Server
 {
     public class Initializer
     {
-        public IList<Status> LoadStatuses(TwitterCredentials credentials)
+        protected IList<Status> LoadStatuses(ITaskBuilder taskBuilder, int count = 3200)
         {
-            var contextBuilder = new TwitterContextBuilder();
-            var twitterContext = contextBuilder.Build(credentials);
-            
-;
             var statuses = new List<Status>();
-            var tweetTask =
-                (from tweet in twitterContext.Status
-                    where tweet.Type == StatusType.User &&
-                          tweet.ScreenName == credentials.ScreenName &&
-                          tweet.Count == 200
-                    select tweet).ToListAsync();
+            var tweetTask = taskBuilder.Build();
 
             tweetTask.Wait();
             statuses.AddRange(tweetTask.Result);
@@ -30,15 +20,9 @@ namespace Server
                 return statuses;
             }
 
-            while (statuses.Count <= 3200)
+            while (statuses.Count < count)
             {
-                tweetTask =
-                    (from tweet in twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.ScreenName == credentials.ScreenName &&
-                              tweet.Count == 200 &&
-                              tweet.MaxID == statuses.Last().StatusID - 1
-                        select tweet).ToListAsync();
+                tweetTask = taskBuilder.Build(statuses[statuses.Count-1].StatusID);
 
                 tweetTask.Wait();
                 statuses.AddRange(tweetTask.Result);
@@ -49,6 +33,21 @@ namespace Server
             }
 
             return statuses;
+        }
+
+        public IList<Status> LoadUserStatuses(TwitterCredentials credentials)
+        {
+            var twitterContextBuilder = new TwitterContextBuilder();
+            ITaskBuilder userStatusesBuilder = new TaskUserStatusesBuilder(twitterContextBuilder.Build(credentials),
+                credentials.ScreenName);
+            return LoadStatuses(userStatusesBuilder);
+        }
+
+        public IList<Status> LoadUserTimeLine(TwitterCredentials credentials)
+        {
+            var twitterContextBuilder = new TwitterContextBuilder();
+            ITaskBuilder userStatusesBuilder = new TaskTimeLineBuilder(twitterContextBuilder.Build(credentials));
+            return LoadStatuses(userStatusesBuilder, 3000);
         }
     }
 }

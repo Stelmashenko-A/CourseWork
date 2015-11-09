@@ -37,7 +37,7 @@ namespace Repository.Test
             var initializer = new Initializer();
             var accountRepository = new AccountRepository();
             var credentials = accountRepository.GetTwitterCredentials(2765688547);
-            var statuses = initializer.LoadStatuses(credentials);
+            var statuses = initializer.LoadUserStatuses(credentials);
 
             accountRepository.DelUserStatuses(2765688547);
             accountRepository.SetUserStatuses(2765688547, statuses.ToList());

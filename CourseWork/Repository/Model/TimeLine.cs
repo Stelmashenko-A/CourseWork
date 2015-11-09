@@ -28,7 +28,7 @@ namespace Repository.Model
 
         public ulong MaxId()
         {
-            return Statuses.Count == 0 ? 1 : Statuses.Max().ID;
+            return Statuses.Count == 0 ? 1 : Statuses[0].ID;
         }
 
         public int Count()
