@@ -39,7 +39,7 @@ namespace SelfHostedRestAPI
                 return new JavaScriptSerializer().Serialize(l);
             };
 
-            Get["/user/{id:long}/send_tweet/{value:alpha}"] = parameters =>
+            Get["/user/{id:long}/send-tweet/{value:alpha}"] = parameters =>
             {
                 var t = new Test(parameters.value);
                 _repository.Add((1), t);

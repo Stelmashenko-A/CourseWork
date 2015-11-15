@@ -14,55 +14,55 @@ namespace SelfHostedRestAPI
         {
             InitializeTweet();
         }
-
+        
         protected void InitializeTweet()
         {
-            Get["/tweets/user_time_line/{id:long}/{count:int}"] = parameters =>
+            Get["/tweets/user-time-line/{id:long}/{count:int}"] = parameters =>
             {
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
 
-            Get["/tweets/user_time_line/{id:long}"] = parameters =>
+            Get["/tweets/user-time-line/{id:long}"] = parameters =>
             {
                 return new JavaScriptSerializer().Serialize(_repository.GetAll(parameters.id));
             };
 
-            Get["/tweets/user_time_line_filtered/{id:long}/{count:int}"] = parameters =>
+            Get["/tweets/user-time-line-filtered/{id:long}/{count:int}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line_filtered"));
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user-time-line-filtered"));
             };
 
-            Get["/tweets/user_time_line_filtered/{id:long}"] = parameters =>
+            Get["/tweets/user-time-line-filtered/{id:long}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "user_time_line_filtered"));
+                return new JavaScriptSerializer().Serialize(ListTest(5, "user-time-line-filtered"));
             };
 
-            Get["/tweets/not_readed/{id:long}"] = parameters =>
+            Get["/tweets/not-readed/{id:long}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "not_readed"));
+                return new JavaScriptSerializer().Serialize(ListTest(5, "not-readed"));
             };
 
-            Get["/tweets/not_readed/{id:long}/{count:int}"] = parameters =>
+            Get["/tweets/not-readed/{id:long}/{count:int}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not_readed"));
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not-readed"));
             };
 
-            Get["/tweets/not_readed_filtered/{id:long}"] = parameters =>
+            Get["/tweets/not-readed-filtered/{id:long}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "not_readed_filtered"));
+                return new JavaScriptSerializer().Serialize(ListTest(5, "not-readed-filtered"));
             };
 
-            Get["/tweets/not_readed_filtered/{id:long}/{count:int}"] = parameters =>
+            Get["/tweets/not-readed-filtered/{id:long}/{count:int}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not_readed_filtered"));
+                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not-readed-filtered"));
             };
 
-            Get["/tweets/last_readed_id"] = _ =>
+            Get["/tweets/last-readed-id"] = _ =>
             {
                 return 12345;
             };
 
-            Get["/tweets/last_id"] = _ =>
+            Get["/tweets/last-id"] = _ =>
             {
                 return 123456;
             };

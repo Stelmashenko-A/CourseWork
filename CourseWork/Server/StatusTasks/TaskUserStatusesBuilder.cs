@@ -28,6 +28,7 @@ namespace Server.StatusTasks
                               tweet.MaxID == maxId - 1
                         select tweet).ToListAsync();
             }
+
             return
                 (from tweet in _twitterContext.Status
                     where tweet.Type == StatusType.User &&
