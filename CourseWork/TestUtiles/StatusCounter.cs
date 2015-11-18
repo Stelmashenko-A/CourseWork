@@ -7,10 +7,10 @@ namespace TestUtiles
 {
     public class StatusCounter
     {
-        public int Count(ulong userId, AccountRepository accountRepository)
+        public int Count(ulong userId, Storage storage)
         {
             var contextBuilder = new TwitterContextBuilder();
-            var twitterContext = contextBuilder.Build(accountRepository.GetTwitterCredentials(2765688547));
+            var twitterContext = contextBuilder.Build(storage.GetAccountById(2765688547).TwitterCredentials);
             var userResponse =
                 (from user in twitterContext.User
                     where user.Type == UserType.Lookup &&

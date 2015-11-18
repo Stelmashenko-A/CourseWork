@@ -85,7 +85,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AccountRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace Server
 {
     public class Server : IJob
     {
-        private readonly AccountRepository _accountRepository = new AccountRepository();
+        private readonly Storage _storage = new Storage();
         public void Execute(IJobExecutionContext context)
         {
             //_accountRepository.

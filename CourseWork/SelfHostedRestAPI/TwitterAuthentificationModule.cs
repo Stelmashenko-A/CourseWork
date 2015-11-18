@@ -33,9 +33,9 @@ namespace SelfHostedRestAPI
                 TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
                     out tokenSecret,
                     out userName, out id);
-                var accountRepository = new AccountRepository();
+                var accountRepository = new Storage();
 
-                accountRepository.Add(id,
+                accountRepository.AddAccount(
                     new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
                 return new JavaScriptSerializer().Serialize("pin");
             };

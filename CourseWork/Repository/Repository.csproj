@@ -78,6 +78,7 @@
       <HintPath>..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -86,10 +87,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
-    <Compile Include="AccountRepository.cs" />
+    <Compile Include="Storage.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Page.cs" />
     <Compile Include="Model\StatusByIdComparer.cs" />
     <Compile Include="Model\Storage.cs" />
     <Compile Include="Model\TimeLine.cs" />
