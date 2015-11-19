@@ -20,17 +20,13 @@ namespace Server
             
             statuses.AddRange(tweetQuery);
 
-            if (statuses.Count < 200)
-            {
-                return statuses;
-            }
 
             while (statuses.Count < count)
             {
                 tweetQuery = queryBuilder.BuildTaskByMaxId(statuses[statuses.Count - 1].StatusID - 1).ToList();
 
                 statuses.AddRange(tweetQuery);
-                if (tweetQuery.Count < 200)
+                if (tweetQuery.Count ==0)
                 {
                     break;
                 }

@@ -17,7 +17,7 @@ namespace Server
             _storage = storage;
         }
 
-        private static IList<Status> Load(IQueryBuilder queryBuilder, ulong maxId, int count = 20000)
+        private static IList<Status> Load(IQueryBuilder queryBuilder, ulong maxId, int count = 2000)
         {
             var statuses = new List<Status>();
             var tweetQuery = queryBuilder.BuildTaskByMinId(maxId + 1).ToList();
@@ -25,7 +25,7 @@ namespace Server
             
             statuses.AddRange(tweetQuery);
 
-            if (statuses.Count < 200)
+            if (statuses.Count < 150)
             {
                 return statuses;
             }
@@ -35,7 +35,7 @@ namespace Server
                 tweetQuery = queryBuilder.BuildTaskByMinIdAndMaxId(maxId + 1, statuses[statuses.Count - 1].StatusID - 1).ToList();
 
                 statuses.AddRange(tweetQuery);
-                if (tweetQuery.Count < 200)
+                if (tweetQuery.Count < 150)
                 {
                     break;
                 }

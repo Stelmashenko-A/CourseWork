@@ -12,7 +12,7 @@ namespace Server.StatusTasks
             _twitterContext = twitterContext;
         }
 
-        public IQueryable<Status> BuildTaskByMaxId(ulong maxId = ulong.MaxValue, int count = 200)
+        public IQueryable<Status> BuildTaskByMaxId(ulong maxId = ulong.MaxValue, int count = 150)
         {
             if (maxId != ulong.MaxValue)
             {
@@ -30,7 +30,7 @@ namespace Server.StatusTasks
                     select tweet);
         }
 
-        public IQueryable<Status> BuildTaskByMinId(ulong minId = 0, int count = 200)
+        public IQueryable<Status> BuildTaskByMinId(ulong minId = 0, int count = 150)
         {
             if (minId == 0)
             {
@@ -48,7 +48,7 @@ namespace Server.StatusTasks
                     select tweet);
         }
 
-        public IQueryable<Status> BuildTaskByMinIdAndMaxId(ulong minId = 0, ulong maxId = uint.MaxValue, int count = 200)
+        public IQueryable<Status> BuildTaskByMinIdAndMaxId(ulong minId = 0, ulong maxId = uint.MaxValue, int count = 150)
         {
             if (minId == 0 & maxId == uint.MaxValue)
             {
