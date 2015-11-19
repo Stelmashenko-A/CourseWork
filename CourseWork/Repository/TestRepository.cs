@@ -2,7 +2,6 @@
 using System.Linq;
 using Raven.Client;
 using Raven.Client.Document;
-using Repository.Model;
 using TestData;
 
 namespace Repository

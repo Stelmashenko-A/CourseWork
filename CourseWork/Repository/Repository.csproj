@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\StatusModel.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Model\Account.cs" />

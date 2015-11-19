@@ -1,5 +1,7 @@
 ﻿using Quartz;
 using Quartz.Impl;
+using Quartz.Spi;
+using Repository;
 
 namespace Server
 {
@@ -8,6 +10,7 @@ namespace Server
         public static void Start()
         {
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.JobFactory=new ServerJobFactory(new Storage());
             scheduler.Start();
 
             var job = JobBuilder.Create<Server>().Build();
@@ -15,7 +18,7 @@ namespace Server
             var trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
                   (s =>
-                     s.WithIntervalInSeconds(20)
+                     s.WithIntervalInSeconds(30)
                     .OnEveryDay()
                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
                   )
@@ -24,4 +27,26 @@ namespace Server
             scheduler.ScheduleJob(job, trigger);
         }
     }
+
+    public class ServerJobFactory : IJobFactory
+    {
+        private Storage storage;
+
+        public ServerJobFactory(Storage storage)
+        {
+            this.storage = storage;
+        }
+
+        public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
+        {
+            return new Server(storage);
+        }
+
+        public void ReturnJob(IJob job)
+        {
+            
+
+        }
+    }
+
 }

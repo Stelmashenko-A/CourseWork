@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Transactions;
 using LinqToTwitter;
+using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
 using Repository.Model;
@@ -22,14 +24,14 @@ namespace Repository
             _store.Initialize();
         }
 
-        public Account GetAccountById(uint id)
+        public Account GetAccountById(ulong id)
         {
             using (var session = _store.OpenSession())
             {
                 return session.Query<Account>().First(account => account.TwitterCredentials.UserId == id);
             }
         }
-
+        
         public Account GetAccountByScreenName(string screenName)
         {
             using (var session = _store.OpenSession())
@@ -38,6 +40,13 @@ namespace Repository
             }
         }
 
+        public IQueryable<Account> GetAllAccounts()
+        {
+            using (var session = _store.OpenSession())
+            {
+                return session.Query<Account>();
+            }
+        } 
         public void AddAccount(Account account)
         {
             using (var session = _store.OpenSession())
@@ -61,6 +70,45 @@ namespace Repository
             }
         }
 
+        public void UpdateIdsAccount(Account account, bool markAsInitialized = false)
+        {
+            _store.DatabaseCommands.Patch(
+                account.Id,
+                new[]
+                {
+                    new PatchRequest
+                    {
+
+                        Name = "MaxId",
+                        Value = account.MaxId
+                    }
+                });
+            _store.DatabaseCommands.Patch(
+                account.Id,
+                new[]
+                {
+                    new PatchRequest
+                    {
+
+                        Name = "MinId",
+                        Value = account.MinId
+                    }
+                });
+            _store.DatabaseCommands.Patch(
+                account.Id,
+                new[]
+                {
+                    new PatchRequest
+                    {
+
+                        Name = "IsInitialized",
+                        Value = account.IsInitialized
+                    }
+                });
+
+        }
+
+
         public Page GetUserLine(uint userId, int pageIndex, int pageSize, uint pageHeaderId = uint.MaxValue)
         {
             using (new TransactionScope())
@@ -70,33 +118,45 @@ namespace Repository
                     var skipCounter = 0;
                     if (pageHeaderId != uint.MaxValue)
                     {
-                        skipCounter = session.Query<Status>().Count(status => status.StatusID > pageHeaderId);
+                        skipCounter = session.Query<StatusModel>()
+                            .Count(status => status.Status.StatusID > pageHeaderId);
                     }
                     var page = new Page(
-                        session.Query<Status>()
-                            .Where(status => status.UserID == userId)
+                        session.Query<StatusModel>()
+                            .Where(status => status.Status.UserID == userId)
                             .Skip((pageIndex - 1)*pageSize + skipCounter)
-                            .Take(pageSize)
-                        );
+                            .Take(pageSize).Select(item => item.Status));
                     return page;
                 }
             }
         }
 
-        public IQueryable<Status> GetAll(uint userId)
+        public IQueryable<Status> GetAllStatuses(uint userId)
         {
             using (var session = _store.OpenSession())
             {
-                return session.Query<Status>().Where(status => status.UserID == userId);
+                return session.Query<StatusModel>().Where(status => status.Status.UserID == userId).Select(item=>item.Status);
             }
         }
 
-        public IQueryable<Status> GetAll(string userName)
+        public IQueryable<Status> GetAllStatuses(string userName)
         {
             using (var session = _store.OpenSession())
             {
                 var userId = GetAccountByScreenName(userName).TwitterCredentials.UserId;
-                return session.Query<Status>().Where(status => status.UserID == userId);
+                return session.Query<StatusModel>().Where(status => status.Status.UserID == userId).Select(item => item.Status);
+            }
+        }
+
+        public void AddStatuses(IList<Status> statuses)
+        {
+            using (var session = _store.OpenSession())
+            {
+                foreach (var statuse in statuses)
+                {
+                    session.Store(new StatusModel(statuse));
+                }
+                session.SaveChanges();
             }
         }
     }
