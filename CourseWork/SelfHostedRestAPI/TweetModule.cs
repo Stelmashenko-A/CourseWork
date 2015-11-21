@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using Nancy;
 using Nancy.Json;
 using Repository;
@@ -8,13 +9,14 @@ namespace SelfHostedRestAPI
 {
     public class TweetModule : NancyModule
     {
-        private readonly TestRepository _repository = new TestRepository();
+        private readonly IStorage _storage;
 
-        public TweetModule()
+        public TweetModule(IStorage storage )
         {
+            _storage = storage;
             InitializeTweet();
         }
-        
+
         protected void InitializeTweet()
         {
             Get["/tweets/user-time-line/{id:long}/{count:int}"] = parameters =>
@@ -22,9 +24,16 @@ namespace SelfHostedRestAPI
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
 
-            Get["/tweets/user-time-line/{id:long}"] = parameters =>
+            Get["/tweets/user-time-line/{value}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(_repository.GetAll(parameters.id));
+                var id = ulong.Parse(parameters.value);
+                var r = _storage.GetUserLine(id, 0, 4, uint.MaxValue);
+                var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
+                return new Response
+                {
+                    ContentType = "application/json",
+                    Contents = s => s.Write(jsonBytes, 0, jsonBytes.Length)
+                };
             };
 
             Get["/tweets/user-time-line-filtered/{id:long}/{count:int}"] = parameters =>
@@ -64,7 +73,7 @@ namespace SelfHostedRestAPI
 
             Get["/tweets/last-id"] = _ =>
             {
-                return 123456;
+                return new JavaScriptSerializer().Serialize(123456);
             };
         }
 

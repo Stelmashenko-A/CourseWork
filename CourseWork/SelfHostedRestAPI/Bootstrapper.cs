@@ -1,5 +1,7 @@
-﻿using Nancy.Bootstrapper;
+﻿using LinqToTwitter;
+using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
+using Repository;
 
 namespace SelfHostedRestAPI
 {
@@ -13,10 +15,11 @@ namespace SelfHostedRestAPI
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             Server.ServerScheduler.Start();
+            container.Register<IStorage, Storage>().AsSingleton();
 
         }
 
-        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+        /*protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
 
             //CORS Enable
@@ -28,6 +31,6 @@ namespace SelfHostedRestAPI
 
             });
 
-        }
+        }*/
     }
 }
