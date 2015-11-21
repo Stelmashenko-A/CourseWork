@@ -13,6 +13,21 @@ namespace SelfHostedRestAPI
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             Server.ServerScheduler.Start();
+
+        }
+
+        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+        {
+
+            //CORS Enable
+            pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
+            {
+                ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
+                    .WithHeader("Access-Control-Allow-Methods", "POST,GET")
+                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, access-control-allow-origin");
+
+            });
+
         }
     }
 }

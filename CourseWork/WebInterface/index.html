@@ -1,18 +1,40 @@
 ﻿<!DOCTYPE html>
+<script src="Scripts/angular.js"></script>
+<html>
+<head></head>
+<body>
 
-<html ng-app="app">
-<head>
-    <title></title>
-</head>
-<body ng-controller="Main as vm">
+<div ng-app="myApp" ng-controller="myCtrl">
 
-    <input type="text" ng-model="vm.food" placeholder="Enter food" />
+    <button ng-click="auth()">Click Me!</button>
 
-    <p>Sriracha sauce is great with {{vm.food}}!</p>
+    <p>{{ count }}</p>
 
-    <script src="Scripts/angular.min.js"></script>
-    <script src="app/app.module.js"></script>
-    <script src="app/main.js"></script>
-
+</div>
 </body>
 </html>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http, $window) {
+        $scope.count = 0;
+        $scope.auth = function() {
+            var req = {
+                method: 'Post',
+                url: 'http://192.168.0.9:12008/twitter/authentification/authorizationUri',
+                headers: {
+                    'Access-Control-Allow-Origin': "http://192.168.0.9:12008/twitter/authentification/authorizationUri"
+                }
+            }
+
+            $http(req).success(function(url) {
+
+                $window.location.href = url;
+            });
+        };
+    });
+</script>
+
+
+
+

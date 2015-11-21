@@ -16,7 +16,7 @@ namespace SelfHostedRestAPI
 
         protected void InitializeTweet()
         {
-            Get["/twitter/authentification/authorizationUri"] = parameters =>
+            Post["/twitter/authentification/authorizationUri"] = parameters =>
             {
                 return TwitterOauth.GetAuthorizationUri();
             };
