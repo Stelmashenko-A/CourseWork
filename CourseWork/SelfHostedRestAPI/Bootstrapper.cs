@@ -19,7 +19,7 @@ namespace SelfHostedRestAPI
 
         }
 
-        /*protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
+        protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
 
             //CORS Enable
@@ -31,6 +31,6 @@ namespace SelfHostedRestAPI
 
             });
 
-        }*/
+        }
     }
 }

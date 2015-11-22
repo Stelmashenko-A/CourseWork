@@ -84,6 +84,18 @@ namespace Repository
             }
         }
 
+        public void SetFollowing(Account account, IList<string> following)
+        {
+            using (var session = _store.OpenSession())
+            {
+                var firstOrDefault = session.Query<Account>().FirstOrDefault(x => x.TwitterCredentials.UserId == account.TwitterCredentials.UserId);
+                if (firstOrDefault == null) return;
+                firstOrDefault.Following = following;
+                session.SaveChanges();
+            }
+
+        }
+
         public void UpdateIdsAccount(Account account, bool markAsInitialized = false)
         {
             _store.DatabaseCommands.Patch(

@@ -49,16 +49,22 @@ namespace Server
         public void Initialize(Account account)
         {
             var twitterContextBuilder = new TwitterContextBuilder();
-            IQueryBuilder queryBuilder = new QueryTimeLineBuilder(twitterContextBuilder.Build(account.TwitterCredentials));
+            var context = twitterContextBuilder.Build(account.TwitterCredentials);
+            IQueryBuilder queryBuilder = new QueryTimeLineBuilder(context);
             var result = LoadStatuses(queryBuilder, account.MinId - 1);
             account.MarkAsInitialized();
             account.MinId = result[result.Count - 1].StatusID;
+            var following = Followers(context, account.TwitterCredentials.ScreenName);
+
+
+
             if (account.MaxId < result[0].StatusID)
             {
                 account.MaxId = result[0].StatusID;
             }
             _storage.AddStatuses(result);
             _storage.UpdateIdsAccount(account, true);
+            _storage.SetFollowing(account,following);
         }
 
         public void Initialize(IList<Account> accounts)
@@ -68,5 +74,35 @@ namespace Server
                 Initialize(account);
             }
         }
+
+        protected IList<string> Followers(TwitterContext twitterCtx, string user)
+        {
+            Friendship friendship;
+            List<string> result = new List<string>();
+            long cursor = -1;
+            do
+            {
+                friendship =
+                    (from friend in twitterCtx.Friendship
+                     where friend.Type == FriendshipType.FriendsList &&
+                           friend.ScreenName == user &&
+                           friend.Cursor == cursor
+                     select friend)
+                    .SingleOrDefaultAsync().Result;
+
+                if (friendship != null &&
+                    friendship.Users != null &&
+                    friendship.CursorMovement != null)
+                {
+                    cursor = friendship.CursorMovement.Next;
+
+                    
+                }
+
+                if (friendship != null) result.AddRange(friendship.Users.Select(x=>x.Name));
+            } while (cursor != 0);
+            var s = friendship;
+            return result;
+        } 
     }
 }

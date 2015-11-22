@@ -9,7 +9,7 @@ namespace Server
             var service = new TwitterService(ConsumerToken.ConsumerKey,
                 ConsumerToken.ConsumerSecret);
             var requestToken = service.GetRequestToken();
-            var uri = service.GetAuthorizationUri(requestToken, "http://127.0.0.1:12008/auth");
+            var uri = service.GetAuthorizationUri(requestToken, "http://127.0.0.1:1400/auth");
             return uri.ToString();
         }
 

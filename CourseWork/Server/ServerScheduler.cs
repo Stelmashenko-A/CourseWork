@@ -18,7 +18,7 @@ namespace Server
             var trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
                   (s =>
-                     s.WithIntervalInMinutes(15)
+                     s.WithIntervalInSeconds(15)
                     .OnEveryDay()
                     .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
                   )
@@ -30,16 +30,16 @@ namespace Server
 
     public class ServerJobFactory : IJobFactory
     {
-        private Storage storage;
+        private Storage _storage;
 
         public ServerJobFactory(Storage storage)
         {
-            this.storage = storage;
+            this._storage = storage;
         }
 
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
-            return new Server(storage);
+            return new Server(_storage);
         }
 
         public void ReturnJob(IJob job)
