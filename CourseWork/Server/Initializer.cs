@@ -52,6 +52,7 @@ namespace Server
             var context = twitterContextBuilder.Build(account.TwitterCredentials);
             IQueryBuilder queryBuilder = new QueryTimeLineBuilder(context);
             var result = LoadStatuses(queryBuilder, account.MinId - 1);
+            result= result.OrderByDescending(x => x.CreatedAt).ToList();
             account.MarkAsInitialized();
             account.MinId = result[result.Count - 1].StatusID;
             var following = Followers(context, account.TwitterCredentials.ScreenName);

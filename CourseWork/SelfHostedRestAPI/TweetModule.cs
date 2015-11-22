@@ -27,7 +27,8 @@ namespace SelfHostedRestAPI
             Get["/tweets/user-time-line/{value}"] = parameters =>
             {
                 var id = ulong.Parse(parameters.value);
-                var r = _storage.GetUserLine(id, 0, 4, uint.MaxValue);
+                var r = _storage.GetUserLine(id, 0, 10, uint.MaxValue);
+                JsonSettings.MaxJsonLength=int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
                 return new Response
                 {

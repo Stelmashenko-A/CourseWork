@@ -5,6 +5,7 @@ using LinqToTwitter;
 using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Linq;
 using Repository.Model;
 using Account = Repository.Model.Account;
 
@@ -96,6 +97,15 @@ namespace Repository
 
         }
 
+        public IList<string> GetFollowing(ulong id)
+        {
+            using (var session = _store.OpenSession())
+            {
+                var account = session.Query<Account>().FirstOrDefault(x => x.TwitterCredentials.UserId == id);
+                return account?.Following;
+            }
+        }
+
         public void UpdateIdsAccount(Account account, bool markAsInitialized = false)
         {
             _store.DatabaseCommands.Patch(
@@ -137,6 +147,7 @@ namespace Repository
 
         public Page GetUserLine(ulong userId, int pageIndex, int pageSize, ulong pageHeaderId = ulong.MaxValue)
         {
+            var following = GetFollowing(userId);
             using (new TransactionScope())
             {
                 using (var session = _store.OpenSession())
@@ -144,15 +155,14 @@ namespace Repository
                     var skipCounter = 0;
                     if (pageHeaderId != uint.MaxValue)
                     {
-                        skipCounter = session.Query<StatusModel>()
+                        skipCounter = session.Query<StatusModel,StatusesByIds>()
                             .Count(status => status.Status.StatusID > pageHeaderId);
                     }
-                    var page = new Page(
-                        session.Query<StatusModel>()
-                            .Where(status => status.Status.User.UserIDResponse == userId.ToString())
-                            .Skip((pageIndex - 1)*pageSize + skipCounter)
-                            .Take(pageSize).Select(item => item.Status)
-                          );
+                    var t = session.Query<StatusModel>().OrderByDescending(x=>x.Status.CreatedAt)
+                        .Where(status => status.Status.User.Name.In(following))
+                        .Skip(skipCounter)
+                        .Take(pageSize).Select(item => item.Status).ToList();
+                    var page = new Page(t);
                     return page;
                 }
             }
@@ -162,7 +172,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                return session.Query<StatusModel>().Where(status => status.Status.UserID == userId).Select(item=>item.Status);
+                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId), item=>item.Status);
             }
         }
 
@@ -171,7 +181,7 @@ namespace Repository
             using (var session = _store.OpenSession())
             {
                 var userId = GetAccountByScreenName(userName).TwitterCredentials.UserId;
-                return session.Query<StatusModel>().Where(status => status.Status.UserID == userId).Select(item => item.Status);
+                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId), item => item.Status);
             }
         }
 

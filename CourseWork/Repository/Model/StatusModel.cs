@@ -2,7 +2,7 @@
 
 namespace Repository.Model
 {
-    class StatusModel
+    public class StatusModel
     {
         public string Id { get; protected set; }
         public Status Status { get; protected set; }
