@@ -15,8 +15,31 @@
 </html>
 
 <script>
+
+</script>
+
+<script>
     var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http, $window) {
+    app.controller('myCtrl', function ($scope, $http, $window,$location) {
+        var absUrl = $location.absUrl();
+        if (absUrl.contains('/?')) {
+            var params = absUrl.split('?');
+            var urlWithTokens = 'http://192.168.0.9:12008/auth/?' + params[1];
+            var reqWithTokens =
+            {
+                method: 'Post',
+                url: urlWithTokens,
+                headers: {
+                    'Access-Control-Allow-Origin': urlWithTokens
+                }
+                
+            }
+            $http(reqWithTokens).success(function (url) {
+
+                $scope.count = 'ok';
+            });
+
+        }
         $scope.count = 0;
         $scope.auth = function() {
             var req = {

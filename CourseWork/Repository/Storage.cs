@@ -46,7 +46,7 @@ namespace Repository
                 return session.Query<Account>().First(account => account.TwitterCredentials.UserId == id);
             }
         }
-        
+
         public Account GetAccountByScreenName(string screenName)
         {
             using (var session = _store.OpenSession())
@@ -61,7 +61,8 @@ namespace Repository
             {
                 return session.Query<Account>();
             }
-        } 
+        }
+
         public void AddAccount(Account account)
         {
             using (var session = _store.OpenSession())
@@ -89,7 +90,9 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                var firstOrDefault = session.Query<Account>().FirstOrDefault(x => x.TwitterCredentials.UserId == account.TwitterCredentials.UserId);
+                var firstOrDefault =
+                    session.Query<Account>()
+                        .FirstOrDefault(x => x.TwitterCredentials.UserId == account.TwitterCredentials.UserId);
                 if (firstOrDefault == null) return;
                 firstOrDefault.Following = following;
                 session.SaveChanges();
@@ -155,10 +158,10 @@ namespace Repository
                     var skipCounter = 0;
                     if (pageHeaderId != uint.MaxValue)
                     {
-                        skipCounter = session.Query<StatusModel,StatusesByIds>()
+                        skipCounter = session.Query<StatusModel, StatusesByIds>()
                             .Count(status => status.Status.StatusID > pageHeaderId);
                     }
-                    var t = session.Query<StatusModel>().OrderByDescending(x=>x.Status.CreatedAt)
+                    var t = session.Query<StatusModel>().OrderByDescending(x => x.Status.CreatedAt)
                         .Where(status => status.Status.User.Name.In(following))
                         .Skip(skipCounter)
                         .Take(pageSize).Select(item => item.Status).ToList();
@@ -172,7 +175,8 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId), item=>item.Status);
+                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId),
+                    item => item.Status);
             }
         }
 
@@ -181,7 +185,8 @@ namespace Repository
             using (var session = _store.OpenSession())
             {
                 var userId = GetAccountByScreenName(userName).TwitterCredentials.UserId;
-                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId), item => item.Status);
+                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId),
+                    item => item.Status);
             }
         }
 
