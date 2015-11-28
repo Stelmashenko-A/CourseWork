@@ -1,4 +1,5 @@
 ﻿using LinqToTwitter;
+using Nancy.Authentication.Token;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using Repository;
@@ -21,7 +22,7 @@ namespace SelfHostedRestAPI
 
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
-
+            TokenAuthentication.Enable(pipelines, new TokenAuthenticationConfiguration(container.Resolve<ITokenizer>()));
             //CORS Enable
             pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
             {
