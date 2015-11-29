@@ -14,6 +14,7 @@ namespace Repository.Model
             IsInitialized = false;
             Id = "accounts/" + TwitterCredentials.UserId;
             Following = new List<string>();
+
         }
 
         public TwitterCredentials TwitterCredentials { get; protected set; }

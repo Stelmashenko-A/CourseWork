@@ -30,7 +30,7 @@ namespace SelfHostedRestAPI
             {
                 return new JavaScriptSerializer().Serialize("pin");
             };
-            Post["/auth"] = parameters =>
+            Post["/authTwitterAccaunt"] = parameters =>
             {
                 string token, tokenSecret, userName;
                 ulong id;
@@ -88,9 +88,6 @@ namespace SelfHostedRestAPI
                     accountRepository.AddAccount(new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
                     return Response.AsRedirect("https://mail.ru");
                 }
-
-
-
             };
         }
     }

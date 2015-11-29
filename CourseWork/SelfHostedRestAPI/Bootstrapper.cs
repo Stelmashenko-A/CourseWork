@@ -17,6 +17,7 @@ namespace SelfHostedRestAPI
         {
             Server.ServerScheduler.Start();
             container.Register<IStorage, Storage>().AsSingleton();
+            container.Register<CredentialsStorege>().AsSingleton();
 
         }
 

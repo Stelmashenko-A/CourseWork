@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Nancy;
+﻿using Nancy;
 using Nancy.Authentication.Token;
 using Nancy.Responses;
 using Nancy.Security;
@@ -10,8 +9,8 @@ namespace SelfHostedRestAPI
 
     public class AuthModule : NancyModule
     {
-        public AuthModule(ITokenizer tokenizer, IStorage storage)
-            : base("/auth2")
+        public AuthModule(ITokenizer tokenizer, CredentialsStorege storage)
+            : base("/auth")
         {
             Post["/"] = x =>
             {
@@ -41,31 +40,10 @@ namespace SelfHostedRestAPI
 
             Get["/admin"] = _ =>
             {
+                
                 this.RequiresClaims(new[] { "admin" });
                 return "Yay! You are authorized!";
             };
-        }
-    }
-
-    public class UserDatabase
-    {
-        public static IUserIdentity ValidateUser(IStorage storage, string userName, string password)
-        {
-            return new UserIdentity();
-        }
-    }
-    public class UserIdentity : IUserIdentity
-    {
-        public string UserName { get; }
-        public IEnumerable<string> Claims { get; }
-
-        public UserIdentity()
-        {
-            UserName = "user";
-            var s = new List<string>();
-            s.Add("admin");
-            Claims = s;
-
         }
     }
 
