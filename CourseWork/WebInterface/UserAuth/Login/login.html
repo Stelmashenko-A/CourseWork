@@ -1,0 +1,32 @@
+﻿<!-- multistep form -->
+<LINK href="/UserAuth/userAuth.css" rel="stylesheet" type="text/css">
+<div class="form">
+
+    <ul class="tab-group">
+        <li class="tab"><a ng-href="#/registration">Sign Up</a></li>
+        <li class="tab active"><a>Log In</a></li>
+    </ul>
+    <div id="signup"></div>
+        <div id="login">
+            <h1>Welcome Back!</h1>
+            <div class="field-wrap">
+                <label>
+                    Email Address<span class="req">*</span>
+                </label>
+                <input type="email" required autocomplete="off" placeholder="example@mail.com" ng-model="email"/>
+            </div>
+
+            <div class="field-wrap">
+                <label>
+                    Password<span class="req">*</span>
+                </label>
+                <input type="password" required autocomplete="off" ng-model="password"/>
+            </div>
+
+            <p class="forgot"><a href="#">Forgot Password?</a></p>
+
+            <button class="button button-block">Log In</button>
+
+        </div>
+
+    </div><!-- tab-content -->

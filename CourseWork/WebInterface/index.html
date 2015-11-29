@@ -1,63 +1,15 @@
-﻿<!DOCTYPE html>
-<script src="Scripts/angular.js"></script>
-<html>
-<head></head>
+﻿<!doctype html>
+<html ng-app="twittyApp">
+<head>
+    <meta charset="utf-8">
+</head>
 <body>
-
-<div ng-app="myApp" ng-controller="myCtrl">
-
-    <button ng-click="auth()">Click Me!</button>
-
-    <p>{{ count }}</p>
-
-</div>
+    <nav><a href="#/login">Вопрос</a>|<a href="#/registration">Ответить</a></nav>
+<ng-view></ng-view>
+<script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="app/app.js"></script>
+    <script src="UserAuth/Login/LoginController.js"></script>
+    <script src="UserAuth/Registration/RegistrationController.js"></script>
 </body>
 </html>
-
-<script>
-
-</script>
-
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function ($scope, $http, $window,$location) {
-        var absUrl = $location.absUrl();
-        if (absUrl.contains('/?')) {
-            var params = absUrl.split('?');
-            var urlWithTokens = 'http://192.168.0.9:12008/auth/?' + params[1];
-            var reqWithTokens =
-            {
-                method: 'Post',
-                url: urlWithTokens,
-                headers: {
-                    'Access-Control-Allow-Origin': urlWithTokens
-                }
-                
-            }
-            $http(reqWithTokens).success(function (url) {
-
-                $scope.count = 'ok';
-            });
-
-        }
-        $scope.count = 0;
-        $scope.auth = function() {
-            var req = {
-                method: 'Post',
-                url: 'http://192.168.0.9:12008/twitter/authentification/authorizationUri',
-                headers: {
-                    'Access-Control-Allow-Origin': "http://192.168.0.9:12008/twitter/authentification/authorizationUri"
-                }
-            }
-
-            $http(req).success(function(url) {
-
-                $window.location.href = url;
-            });
-        };
-    });
-</script>
-
-
-
-
