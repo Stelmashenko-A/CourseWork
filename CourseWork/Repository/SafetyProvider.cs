@@ -29,7 +29,7 @@ namespace Repository
             var passwordHash = pbkdf2.GetBytes(HashByteSize);
             return ConstTimeEquals(passwordHash, byteHash);
         }
-
+        //endless scroll  infinite scroll nginfinitescroll
         public bool ConstTimeEquals(byte[] firstByteArray, byte[] secondByteArray)
         {
             var difference = (uint) firstByteArray.Length ^ (uint) secondByteArray.Length;

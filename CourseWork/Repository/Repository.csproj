@@ -87,7 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICredentialsStore.cs" />
+    <Compile Include="CredentialsStorage.cs" />
     <Compile Include="Model\InternalCredentials.cs" />
     <Compile Include="SafetyProvider.cs" />
     <Compile Include="IStorage.cs" />

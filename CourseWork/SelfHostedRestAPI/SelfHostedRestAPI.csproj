@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="AuthModule.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="RegistrationModule.cs" />
     <Compile Include="UserDatabase.cs" />
     <Compile Include="UserIdentity.cs" />
     <Compile Include="UserModule.cs" />

@@ -8,7 +8,7 @@ namespace SelfHostedRestAPI
     {
         public string UserName { get; }
         public IEnumerable<string> Claims { get; }
-
+        
         public UserIdentity()
         {
             UserName = "user";

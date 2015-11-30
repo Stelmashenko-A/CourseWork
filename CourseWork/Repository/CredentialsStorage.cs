@@ -5,11 +5,11 @@ using Repository.Model;
 
 namespace Repository
 {
-    public class CredentialsStorege
+    public class CredentialsStorage
     {
         protected DocumentStore Store;
         protected SafetyProvider SafetyProvider;
-        public CredentialsStorege()
+        public CredentialsStorage()
         {
             Store = new DocumentStore
             {
@@ -46,6 +46,18 @@ namespace Repository
                 return credentials.First().TwitterIds;
             }
 
+        }
+
+        public void CreateUser(string email, string password)
+        {
+            using (var session = Store.OpenSession())
+            {
+                string hash, salt;
+                int iterations;
+                SafetyProvider.GetHash(password, out hash,out salt, out iterations);
+                session.Store(new InternalCredentials(email,hash,salt,iterations));
+                session.SaveChanges();
+            }
         }
     }
 }

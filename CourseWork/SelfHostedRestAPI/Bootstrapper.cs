@@ -17,7 +17,7 @@ namespace SelfHostedRestAPI
         {
             Server.ServerScheduler.Start();
             container.Register<IStorage, Storage>().AsSingleton();
-            container.Register<CredentialsStorege>().AsSingleton();
+            container.Register<CredentialsStorage>().AsSingleton();
 
         }
 
@@ -29,7 +29,7 @@ namespace SelfHostedRestAPI
             {
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
                     .WithHeader("Access-Control-Allow-Methods", "POST,GET")
-                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, access-control-allow-origin");
+                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, access-control-allow-origin, password, username");
 
             });
 

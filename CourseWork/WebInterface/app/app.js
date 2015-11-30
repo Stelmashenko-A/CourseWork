@@ -1,5 +1,5 @@
-﻿var twittyApp = angular.module('twittyApp', ["ngRoute"])
-    .config(function ($routeProvider) {
+﻿var twittyApp = angular.module('twittyApp', ['ngRoute', 'ngCookies'])
+    .config(function($routeProvider) {
         $routeProvider.when('/registration',
         {
             templateUrl: 'UserAuth/Registration/registration.html',
@@ -10,4 +10,5 @@
             templateUrl: 'UserAuth/Login/login.html',
             controller: 'LoginController'
         });
+        
     });

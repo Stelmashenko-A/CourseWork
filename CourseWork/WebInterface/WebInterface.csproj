@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="IndexController.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
     <Content Include="UserAuth\Login\login.html" />

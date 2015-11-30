@@ -1,4 +1,5 @@
-﻿using Nancy;
+﻿using System.Linq;
+using Nancy;
 using Nancy.Authentication.Token;
 using Nancy.Responses;
 using Nancy.Security;
@@ -6,16 +7,17 @@ using Repository;
 
 namespace SelfHostedRestAPI
 {
-
     public class AuthModule : NancyModule
     {
-        public AuthModule(ITokenizer tokenizer, CredentialsStorege storage)
+        public AuthModule(ITokenizer tokenizer, CredentialsStorage storage)
             : base("/auth")
         {
             Post["/"] = x =>
             {
-                var userName = (string)Request.Form.UserName;
-                var password = (string)Request.Form.Password;
+                var userName = Request.Headers["UserName"].First();
+                var password = Request.Headers["Password"].First();
+               // var userName = (string)Request.Form.UserName;
+                //var password = (string)Request.Form.Password;
 
                 var userIdentity = UserDatabase.ValidateUser(storage, userName, password);
 
