@@ -67,11 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="FirstAccaunt\firstAccaunt.html" />
+    <Content Include="FirstAccaunt\FirstAccauntController.js" />
+    <Content Include="FirstAccaunt\twitterTokens.html" />
+    <Content Include="FirstAccaunt\TwitterTokensController.js" />
     <Content Include="IndexController.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
     <Content Include="UserAuth\Login\login.html" />
-    <Content Include="UserAuth\userAuth.css" />
+    <Content Include="userAuth.css" />
     <Content Include="UserAuth\Registration\RegistrationController.js" />
     <Content Include="packages.config" />
     <Content Include="Scripts\angular-animate.js" />

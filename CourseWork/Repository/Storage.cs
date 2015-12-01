@@ -29,7 +29,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                return session.Query<Account>().First(account => account.TwitterCredentials.UserId == id);
+                return session.Query<Account>().FirstOrDefault(account => account.TwitterCredentials.UserId == id);
             }
         }
 

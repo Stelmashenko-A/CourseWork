@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using Nancy;
+using Nancy.Authentication.Token;
 using Nancy.Json;
 using Nancy.Responses;
+using Nancy.Security;
 using Repository;
 using Repository.Model;
 using Server;
@@ -11,12 +14,12 @@ namespace SelfHostedRestAPI
 {
     public class TwitterAuthentificationModule : NancyModule
     {
-        public TwitterAuthentificationModule()
+        public TwitterAuthentificationModule(CredentialsStorage credentialsStorage, ITokenizer tokenizer)
         {
-            InitializeTweet();
+            InitializeTweet(credentialsStorage, tokenizer);
         }
 
-        protected void InitializeTweet()
+        protected void InitializeTweet(CredentialsStorage credentialsStorage, ITokenizer tokenizer)
         {
             Post["/twitter/authentification/authorizationUri"] = parameters =>
             {
@@ -32,6 +35,7 @@ namespace SelfHostedRestAPI
             };
             Post["/authTwitterAccaunt"] = parameters =>
             {
+                this.RequiresClaims(new[] { Request.Headers["Email"].First() });
                 string token, tokenSecret, userName;
                 ulong id;
 
@@ -42,24 +46,39 @@ namespace SelfHostedRestAPI
                 try
                 {
                     var acc = accountRepository.GetAccountById(id);
+                    var claimsUint = credentialsStorage.GetClaims(Request.Headers["Email"].First());
+                    string authToken;
                     if (acc == null)
                     {
+
+                        claimsUint.Add(id);
+                        credentialsStorage.AddAccount(Request.Headers["Email"].First(), id);
                         accountRepository.AddAccount(
                             new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
-                        return new RedirectResponse("https://mail.ru", RedirectResponse.RedirectType.Temporary);
+                        authToken = tokenizer.Tokenize(
+                            new UserIdentity(Request.Headers["Email"].First(), claimsUint.Select(x => x.ToString())),
+                            Context);
+
+
+                        return new JavaScriptSerializer().Serialize(new SetTokenResponse(id, authToken));
                     }
                     accountRepository.ResetTokens(userName, new TwitterToken(token, tokenSecret));
-                    return new RedirectResponse("https://mail.ru", RedirectResponse.RedirectType.Temporary);
+                    authToken = tokenizer.Tokenize(
+                        new UserIdentity(Request.Headers["Email"].First(), claimsUint.Select(x => x.ToString())),
+                        Context);
+
+                    return new JavaScriptSerializer().Serialize(new SetTokenResponse(id, authToken));
                 }
                 catch (Exception)
                 {
-                    
-                    accountRepository.AddAccount(new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
+
+                    accountRepository.AddAccount(
+                        new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
                     return Response.AsRedirect("https://mail.ru");
                 }
-                
-                
-                    
+
+
+
             };
             Get["/auth"] = parameters =>
             {
@@ -92,4 +111,15 @@ namespace SelfHostedRestAPI
         }
     }
 
+    public class SetTokenResponse
+    {
+        public SetTokenResponse(ulong currentAccountId, string token)
+        {
+            CurrentAccountId = currentAccountId;
+            Token = token;
+        }
+
+        public string Token { get; protected set; }
+        public ulong CurrentAccountId { get; protected set; }
+    }
 }

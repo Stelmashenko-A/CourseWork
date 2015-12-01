@@ -10,5 +10,15 @@
             templateUrl: 'UserAuth/Login/login.html',
             controller: 'LoginController'
         });
+        $routeProvider.when('/firstAccaunt',
+        {
+            templateUrl: 'FirstAccaunt/firstAccaunt.html',
+            controller: 'FirstAccauntController'
+        });
+        $routeProvider.when('/twitter-tokens',
+       {
+           templateUrl: 'FirstAccaunt/twitterTokens.html',
+           controller: 'TwitterTokensController'
+       });
         
     });

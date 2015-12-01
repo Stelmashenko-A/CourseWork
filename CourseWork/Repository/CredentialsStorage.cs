@@ -59,5 +59,14 @@ namespace Repository
                 session.SaveChanges();
             }
         }
+
+        public void AddAccount(string email, ulong id)
+        {
+            using (var session = Store.OpenSession())
+            {
+                session.Advanced.LuceneQuery<InternalCredentials>().First(item=>item.Email==email).TwitterIds.Add(id);
+                session.SaveChanges();
+            }
+        }
     }
 }
