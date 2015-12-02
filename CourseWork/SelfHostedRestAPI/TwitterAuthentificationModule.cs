@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Nancy;
 using Nancy.Authentication.Token;
@@ -46,12 +47,13 @@ namespace SelfHostedRestAPI
                 try
                 {
                     var acc = accountRepository.GetAccountById(id);
-                    var claimsUint = credentialsStorage.GetClaims(Request.Headers["Email"].First());
+                    var claimsUint = credentialsStorage.GetClaims(Request.Headers["Email"].First()) ?? new List<ulong>();
+                    claimsUint.Add(id);
                     string authToken;
                     if (acc == null)
                     {
 
-                        claimsUint.Add(id);
+                        
                         credentialsStorage.AddAccount(Request.Headers["Email"].First(), id);
                         accountRepository.AddAccount(
                             new Account(new TwitterCredentials(new TwitterToken(token, tokenSecret), userName, id)));
@@ -63,6 +65,11 @@ namespace SelfHostedRestAPI
                         return new JavaScriptSerializer().Serialize(new SetTokenResponse(id, authToken));
                     }
                     accountRepository.ResetTokens(userName, new TwitterToken(token, tokenSecret));
+                    var t = claimsUint.Select(x => x.ToString());
+                    if (t == null)
+                    {
+                        t= new List<string>();
+                    }
                     authToken = tokenizer.Tokenize(
                         new UserIdentity(Request.Headers["Email"].First(), claimsUint.Select(x => x.ToString())),
                         Context);

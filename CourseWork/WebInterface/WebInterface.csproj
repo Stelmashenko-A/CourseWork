@@ -72,6 +72,8 @@
     <Content Include="FirstAccaunt\twitterTokens.html" />
     <Content Include="FirstAccaunt\TwitterTokensController.js" />
     <Content Include="IndexController.js" />
+    <Content Include="TimeLine\timeLine.html" />
+    <Content Include="TimeLine\TimeLineController.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
     <Content Include="UserAuth\Login\login.html" />

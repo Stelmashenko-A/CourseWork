@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LinqToTwitter;
 using Repository;
@@ -14,24 +15,31 @@ namespace Server
 
         protected IList<Status> LoadStatuses(IQueryBuilder queryBuilder, ulong maxId, int count = 3200)
         {
-            var statuses = new List<Status>();
-            var tweetQuery = queryBuilder.BuildTaskByMaxId(maxId).ToList();
-
-            
-            statuses.AddRange(tweetQuery);
-
-
-            while (statuses.Count < count)
+            try
             {
-                tweetQuery = queryBuilder.BuildTaskByMaxId(statuses[statuses.Count - 1].StatusID - 1).ToList();
+                var statuses = new List<Status>();
+                var tweetQuery = queryBuilder.BuildTaskByMaxId(maxId).ToList();
+
 
                 statuses.AddRange(tweetQuery);
-                if (tweetQuery.Count ==0)
+
+
+                while (statuses.Count < count)
                 {
-                    break;
+                    tweetQuery = queryBuilder.BuildTaskByMaxId(statuses[statuses.Count - 1].StatusID - 1).ToList();
+
+                    statuses.AddRange(tweetQuery);
+                    if (tweetQuery.Count == 0)
+                    {
+                        break;
+                    }
                 }
+                return statuses;
             }
-            return statuses;
+            catch (Exception)
+            {
+                return new List<Status>();
+            }
         }
 
         public IList<Status> LoadUserTimeLine(TwitterCredentials credentials)

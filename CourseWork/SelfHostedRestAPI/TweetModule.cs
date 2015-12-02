@@ -24,7 +24,7 @@ namespace SelfHostedRestAPI
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
 
-            Get["/tweets/user-time-line/{value}"] = parameters =>
+            Post["/tweets/user-time-line/{value}"] = parameters =>
             {
                 var id = ulong.Parse(parameters.value);
                 var r = _storage.GetUserLine(id, 0, 10, uint.MaxValue);

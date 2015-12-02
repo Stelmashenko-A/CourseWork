@@ -60,14 +60,14 @@ namespace Repository
 
         public void ResetTokens(string screenName, TwitterToken tokens)
         {
-            var oldAccount = GetAccountByScreenName(screenName);
-            var newAccount =
-                new Account(new TwitterCredentials(tokens, oldAccount.TwitterCredentials.ScreenName,
-                    oldAccount.TwitterCredentials.UserId)) {LastReadedTweetId = oldAccount.LastReadedTweetId};
+           
             using (var session = _store.OpenSession())
             {
-                session.Delete(oldAccount);
-                session.Store(newAccount);
+                var firstOrDefault = session.Advanced.LuceneQuery<Account>()
+                    .FirstOrDefault(item => item.TwitterCredentials.ScreenName == screenName);
+                if (firstOrDefault != null)
+                    firstOrDefault
+                        .TwitterCredentials.Tokens = tokens;
                 session.SaveChanges();
             }
         }

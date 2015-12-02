@@ -22,7 +22,7 @@
             }
             $http(reqWithTokens).success(function (resp) {
 
-                $cookies["email"] = resp.Email;
+                $cookies.put('currentId', resp.CurrentAccountId);
                 $cookies["token"] = resp.Token;
             });
       

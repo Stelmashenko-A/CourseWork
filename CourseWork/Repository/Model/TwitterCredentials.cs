@@ -9,7 +9,7 @@
             UserId = userId;
         }
 
-        public TwitterToken Tokens { get; private set; }
+        public TwitterToken Tokens { get; set; }
 
         public string ScreenName { get; private set; }
 

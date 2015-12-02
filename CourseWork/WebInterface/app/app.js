@@ -20,5 +20,10 @@
            templateUrl: 'FirstAccaunt/twitterTokens.html',
            controller: 'TwitterTokensController'
        });
+        $routeProvider.when('/time-line',
+      {
+          templateUrl: 'TimeLine/timeLine.html',
+          controller: 'TimeLineController'
+      });
         
     });
