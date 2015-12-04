@@ -142,9 +142,9 @@ namespace Repository
                 using (var session = _store.OpenSession())
                 {
                     var skipCounter = 0;
-                    if (pageHeaderId != uint.MaxValue)
+                    if (pageHeaderId != ulong.MaxValue)
                     {
-                        skipCounter = session.Query<StatusModel, StatusesByIds>()
+                        skipCounter = session.Query<StatusModel>()
                             .Count(status => status.Status.StatusID > pageHeaderId);
                     }
                     var t = session.Query<StatusModel>().OrderByDescending(x => x.Status.CreatedAt)

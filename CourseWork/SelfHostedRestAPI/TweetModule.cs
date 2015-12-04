@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Nancy;
 using Nancy.Json;
@@ -26,8 +28,21 @@ namespace SelfHostedRestAPI
 
             Post["/tweets/user-time-line/{value}"] = parameters =>
             {
+                var pageString = Request.Headers["Page"].First();
+                var lineHeadString = Request.Headers["LineHead"].First();
+                var page = int.Parse(pageString);
+                var lineHead = ulong.MaxValue;
+                try
+                {
+                    lineHead = ulong.Parse(lineHeadString);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+
                 var id = ulong.Parse(parameters.value);
-                var r = _storage.GetUserLine(id, 0, 10, uint.MaxValue);
+                var r = _storage.GetUserLine(id, page, 10, lineHead);
                 JsonSettings.MaxJsonLength=int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
                 return new Response
