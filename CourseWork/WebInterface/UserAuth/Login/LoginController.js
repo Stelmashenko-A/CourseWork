@@ -2,7 +2,7 @@
     function LoginController($scope, $http, $cookies) {
         $scope.password = '';
         $scope.email = '';
-        $scope.regitration = function () {
+        $scope.login = function () {
             $http({
                 method: 'POST',
                 url: 'http://127.0.0.1:12008/auth',
