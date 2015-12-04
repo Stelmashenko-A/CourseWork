@@ -28,7 +28,7 @@ namespace Repository
                 if (!credentials.Any()||credentials.Count()>1)
                 {
                     return false;
-                }
+                } 
                 var cred = credentials.First();
                 return SafetyProvider.CheckPassword(password, cred.PasswordHash, cred.Salt, cred.Iterations);
             }
