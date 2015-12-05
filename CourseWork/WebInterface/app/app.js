@@ -1,4 +1,4 @@
-﻿var twittyApp = angular.module('twittyApp', ['ngRoute', 'ngCookies', 'dc.endlessScroll'])
+﻿var twittyApp = angular.module('twittyApp', ['ngRoute', 'ngCookies', 'infinite-scroll'])
     .config(function($routeProvider) {
         $routeProvider.when('/registration',
         {

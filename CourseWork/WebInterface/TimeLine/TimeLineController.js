@@ -1,10 +1,34 @@
-﻿twittyApp.controller('TimeLineController',
-    function TimeLineController($scope, $http, $routeParams, $q) {
-        $scope.page = 0;
+﻿twittyApp.factory('Reddit', function ($http) {
+    var Reddit = function () {
+        this.items = [];
+        this.busy = false;
+        this.after = '';
+    };
+
+    Reddit.prototype.nextPage = function () {
+        if (this.busy) return;
+        this.busy = true;
+
+        var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
+        $http.jsonp(url).success(function (data) {
+            var items = data.data.children;
+            for (var i = 0; i < items.length; i++) {
+                this.items.push(items[i].data);
+            }
+            this.after = "t3_" + this.items[this.items.length - 1].id;
+            this.busy = false;
+        }.bind(this));
+    };
+
+    return Reddit;
+});
+twittyApp.controller('TimeLineController', function ($scope, Reddit) {
+    $scope.reddit = new Reddit();
+       // $scope.page = 0;
         //$scope.lineHead = 99999999999;
-        if (!angular.isDefined($scope.lineHead)) {
-            var arr = [];
-            arr.push($http.post('http://127.0.0.1:12008/tweets/user-time-line/lineHead/2765688547'));
+      //  if (!angular.isDefined($scope.lineHead)) {
+        //    var arr = [];
+          //  arr.push($http.post('http://127.0.0.1:12008/tweets/user-time-line/lineHead/2765688547'));
             /* $http.post({
                     url: 'http://127.0.0.1:12008/tweets/user-time-line/lineHead/2765688547',
                     headers: {
@@ -17,7 +41,7 @@
 
 
            });*/
-            $q.all(arr).then(function (ret) {
+            /*$q.all(arr).then(function (ret) {
                 var t = ret[0].data;
                 $scope.lineHead = t;
                 
@@ -72,8 +96,8 @@
                 // Load initial page (first page or from query param)
 
                $scope.load($routeParams.page ? parseInt($routeParams.page, 10) : 1); // Register event handler
-            });
-        }
+            });*/
+    //    }
 
 
        
