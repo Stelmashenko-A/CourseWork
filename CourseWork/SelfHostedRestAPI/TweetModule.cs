@@ -25,10 +25,18 @@ namespace SelfHostedRestAPI
             {
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
-
+            Post["/tweets/user-time-line/lineHead/{value}"] = parameters =>
+            {
+                var id = ulong.Parse(parameters.value);
+                return _storage.GetLineHead(id);
+            };
             Post["/tweets/user-time-line/{value}"] = parameters =>
             {
                 var pageString = Request.Headers["Page"].First();
+                if (!Request.Headers.Keys.Contains("LineHead"))
+                {
+                    return null;
+                }
                 var lineHeadString = Request.Headers["LineHead"].First();
                 var page = int.Parse(pageString);
                 var lineHead = ulong.MaxValue;

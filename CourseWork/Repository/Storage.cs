@@ -60,7 +60,7 @@ namespace Repository
 
         public void ResetTokens(string screenName, TwitterToken tokens)
         {
-           
+
             using (var session = _store.OpenSession())
             {
                 var firstOrDefault = session.Advanced.LuceneQuery<Account>()
@@ -185,6 +185,14 @@ namespace Repository
                     session.Store(new StatusModel(statuse));
                 }
                 session.SaveChanges();
+            }
+        }
+
+        public ulong GetLineHead(ulong id)
+        {
+            using (var session = _store.OpenSession())
+            {
+                return session.Query<StatusModel>().OrderByDescending(x => x.Status.CreatedAt).First().Status.StatusID;
             }
         }
     }

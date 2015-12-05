@@ -18,6 +18,6 @@ namespace Repository
         IQueryable<Status> GetAllStatuses(uint userId);
         IQueryable<Status> GetAllStatuses(string userName);
         void AddStatuses(IList<Status> statuses);
-
+        ulong GetLineHead(ulong id);
     }
 }
