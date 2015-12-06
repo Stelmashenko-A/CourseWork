@@ -50,7 +50,7 @@ namespace SelfHostedRestAPI
                 }
 
                 var id = ulong.Parse(parameters.value);
-                var r = _storage.GetUserLine(id, page, 10, lineHead);
+                var r = _storage.GetUserLine(id, page, 7, lineHead);
                 JsonSettings.MaxJsonLength=int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
                 return new Response

@@ -2,10 +2,10 @@
 
 
 <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
-    <div ng-repeat='item in reddit.items'>
-        <span class='score'>{{item.score}}</span>
+    <div class="well" ng-repeat='item in reddit.items'>
+        <span class='score'>{{item.Text}}</span>
         <span class='title'>
-            <a ng-href='{{item.url}}' target='_blank'>{{item.title}}</a>
+            <a ng-href='{{item.Text}}' target='_blank'>{{item.SinceId}}</a>
         </span>
         <small>
             by {{item.author}} -

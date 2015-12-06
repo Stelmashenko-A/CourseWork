@@ -2,14 +2,39 @@
     var Reddit = function () {
         this.items = [];
         this.busy = false;
-        this.after = '';
+        this.page = 0;
+        this.after = -1;
     };
 
     Reddit.prototype.nextPage = function () {
         if (this.busy) return;
         this.busy = true;
+        //
 
-        var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
+            $http({
+                method: 'POST',
+                url: 'http://127.0.0.1:12008/tweets/user-time-line/2765688547',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Page': this.page,
+                    'LineHead': this.after
+                }
+            }).success(function (data) {
+            
+                var items = data.Statuses;
+                for (var i = 0; i < items.length; i++) {
+                    this.items.push(items[i]);
+                }
+                //     this.after = "t3_" + this.items[this.items.length - 1].id;
+
+                this.after = this.items[this.items.length - 1].StatusID;
+                this.page++;
+                this.busy = false;
+            }.bind(this));
+
+
+        //
+       /* var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
         $http.jsonp(url).success(function (data) {
             var items = data.data.children;
             for (var i = 0; i < items.length; i++) {
@@ -17,7 +42,7 @@
             }
             this.after = "t3_" + this.items[this.items.length - 1].id;
             this.busy = false;
-        }.bind(this));
+        }.bind(this));*/
     };
 
     return Reddit;
