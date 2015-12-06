@@ -10,11 +10,11 @@ namespace Server
     [DisallowConcurrentExecution]
     public class Server : IJob
     {
-        public Server(Storage storage)
+        public Server(IStorage storage)
         {
             _storage = storage;
         }
-        private readonly Storage _storage;
+        private readonly IStorage _storage;
 
         public void Execute(IJobExecutionContext context)
         {

@@ -7,21 +7,28 @@ namespace Server
 {
     public class ServerScheduler
     {
-        public static void Start()
+        public ServerScheduler(IStorage storage)
+        {
+            _storage = storage;
+        }
+
+        private readonly IStorage _storage;
+
+        public void Start()
         {
             var scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            scheduler.JobFactory=new ServerJobFactory(new Storage());
+            scheduler.JobFactory = new ServerJobFactory(_storage);
             scheduler.Start();
 
             var job = JobBuilder.Create<Server>().Build();
 
             var trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
-                  (s =>
-                     s.WithIntervalInMinutes(15)
-                    .OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
-                  )
+                (s =>
+                    s.WithIntervalInMinutes(15)
+                        .OnEveryDay()
+                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
+                )
                 .Build();
 
             scheduler.ScheduleJob(job, trigger);
@@ -30,9 +37,9 @@ namespace Server
 
     public class ServerJobFactory : IJobFactory
     {
-        private Storage _storage;
+        private readonly IStorage _storage;
 
-        public ServerJobFactory(Storage storage)
+        public ServerJobFactory(IStorage storage)
         {
             this._storage = storage;
         }

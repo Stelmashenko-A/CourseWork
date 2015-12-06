@@ -1,8 +1,8 @@
-﻿using LinqToTwitter;
-using Nancy.Authentication.Token;
+﻿using Nancy.Authentication.Token;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using Repository;
+using Server;
 
 namespace SelfHostedRestAPI
 {
@@ -15,9 +15,11 @@ namespace SelfHostedRestAPI
         // For more information https://github.com/NancyFx/Nancy/wiki/Bootstrapper
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            Server.ServerScheduler.Start();
+
             container.Register<IStorage, Storage>().AsSingleton();
             container.Register<CredentialsStorage>().AsSingleton();
+            var serverScheduler = new ServerScheduler(container.Resolve<IStorage>());
+            serverScheduler.Start();
 
         }
 
@@ -29,7 +31,8 @@ namespace SelfHostedRestAPI
             {
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
                     .WithHeader("Access-Control-Allow-Methods", "POST,GET")
-                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, access-control-allow-origin, password, username, authorization, email, linehead, page, x-pagination");
+                    .WithHeader("Access-Control-Allow-Headers",
+                        "Accept, Origin, Content-type, access-control-allow-origin, password, username, authorization, email, linehead, page, x-pagination");
 
             });
 

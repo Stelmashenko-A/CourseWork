@@ -15,8 +15,11 @@ namespace SelfHostedRestAPI
 {
     public class TwitterAuthentificationModule : NancyModule
     {
-        public TwitterAuthentificationModule(CredentialsStorage credentialsStorage, ITokenizer tokenizer)
+        private readonly IStorage _storage;
+
+        public TwitterAuthentificationModule(CredentialsStorage credentialsStorage, ITokenizer tokenizer, IStorage storage)
         {
+            _storage = storage;
             InitializeTweet(credentialsStorage, tokenizer);
         }
 
@@ -43,7 +46,7 @@ namespace SelfHostedRestAPI
                 TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
                     out tokenSecret,
                     out userName, out id);
-                var accountRepository = new Storage();
+                var accountRepository = _storage;
                 try
                 {
                     var acc = accountRepository.GetAccountById(id);
@@ -95,7 +98,7 @@ namespace SelfHostedRestAPI
                 TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
                     out tokenSecret,
                     out userName, out id);
-                var accountRepository = new Storage();
+                var accountRepository = _storage;
                 try
                 {
                     var acc = accountRepository.GetAccountById(id);

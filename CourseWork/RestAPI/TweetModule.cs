@@ -8,7 +8,6 @@ namespace RestAPI
 {
     public class TweetModule : NancyModule
     {
-        private readonly TestRepository _repository = new TestRepository();
 
         public TweetModule()
         {
@@ -20,11 +19,6 @@ namespace RestAPI
             Get["/tweets/user_time_line/{id:long}/{count:int}"] = parameters =>
             {
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
-            };
-
-            Get["/tweets/user_time_line/{id:long}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(_repository.GetAll(parameters.id));
             };
 
             Get["/tweets/user_time_line_filtered/{id:long}/{count:int}"] = parameters =>

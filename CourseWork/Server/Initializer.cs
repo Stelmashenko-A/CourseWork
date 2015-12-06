@@ -11,7 +11,7 @@ namespace Server
 {
     public class Initializer
     {
-        private readonly Storage _storage;
+        private readonly IStorage _storage;
 
         protected IList<Status> LoadStatuses(IQueryBuilder queryBuilder, ulong maxId, int count = 3200)
         {
@@ -49,7 +49,7 @@ namespace Server
             return LoadStatuses(userStatusesBuilder, 3000);
         }
 
-        public Initializer(Storage storage)
+        public Initializer(IStorage storage)
         {
             _storage = storage;
         }

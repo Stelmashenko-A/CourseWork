@@ -1,6 +1,7 @@
 ﻿using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 
+
 namespace RestAPI
 {
     using Nancy;
@@ -13,7 +14,8 @@ namespace RestAPI
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             // your customization goes here
-            Server.ServerScheduler.Start();
+            //var server = new Server.Server();
+            //Server.ServerScheduler.Start();
         }
     }
 }

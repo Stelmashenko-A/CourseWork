@@ -9,8 +9,6 @@ namespace SelfHostedRestAPI
     public class UserModule : NancyModule
     {
 
-        private readonly IRepository<Test> _repository = new TestRepository();
-
         public UserModule()
         {
             InitializeUser();
@@ -37,13 +35,6 @@ namespace SelfHostedRestAPI
             {
                 var l = new List<Test> { new Test("F1"), new Test("F2"), new Test("f3") };
                 return new JavaScriptSerializer().Serialize(l);
-            };
-
-            Get["/user/{id:long}/send-tweet/{value:alpha}"] = parameters =>
-            {
-                var t = new Test(parameters.value);
-                _repository.Add((1), t);
-                return new JavaScriptSerializer().Serialize(t);
             };
         }
     }

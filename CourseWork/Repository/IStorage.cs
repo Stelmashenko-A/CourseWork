@@ -19,5 +19,6 @@ namespace Repository
         IQueryable<Status> GetAllStatuses(string userName);
         void AddStatuses(IList<Status> statuses);
         ulong GetLineHead(ulong id);
+        void SetFollowing(Account account, IList<string> following);
     }
 }

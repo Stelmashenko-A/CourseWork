@@ -10,9 +10,9 @@ namespace Server
 {
     public class UpDater
     {
-        private readonly Storage _storage;
+        private readonly IStorage _storage;
 
-        public UpDater(Storage storage)
+        public UpDater(IStorage storage)
         {
             _storage = storage;
         }
