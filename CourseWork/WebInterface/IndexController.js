@@ -37,6 +37,7 @@
             } else {
                 $scope.email = email;
                 $scope.Token = Token;
+                $location.path("/time-line");
 
             }
 

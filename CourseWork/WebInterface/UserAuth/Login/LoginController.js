@@ -1,5 +1,5 @@
 ﻿twittyApp.controller('LoginController',
-    function LoginController($scope, $http, $cookies) {
+    function LoginController($scope, $http, $cookies, $location) {
         $scope.password = '';
         $scope.email = '';
         $scope.login = function () {
@@ -15,6 +15,7 @@
                 var token = resp.Token;
                 $cookies.put('token', token);
                 $cookies.put('email', $scope.email);
+                $location.path("/time-line");
             });
         }
     }
