@@ -1,19 +1,20 @@
-﻿twittyApp.factory('Reddit', function ($http) {
+﻿twittyApp.factory('Reddit', function ($http,$cookies) {
     var Reddit = function () {
         this.items = [];
         this.busy = false;
         this.page = 0;
         this.after = -1;
+
     };
 
     Reddit.prototype.nextPage = function () {
         if (this.busy) return;
         this.busy = true;
         //
-
+        var id = $cookies.get("userId");
             $http({
                 method: 'POST',
-                url: 'http://127.0.0.1:12008/tweets/user-time-line/2765688547',
+                url: 'http://127.0.0.1:12008/tweets/user-time-line/'+id,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Page': this.page,

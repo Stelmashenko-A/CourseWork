@@ -8,11 +8,11 @@ using Account = Repository.Model.Account;
 
 namespace Server
 {
-    public class UpDater
+    public class Updater
     {
         private readonly IStorage _storage;
 
-        public UpDater(IStorage storage)
+        public Updater(IStorage storage)
         {
             _storage = storage;
         }

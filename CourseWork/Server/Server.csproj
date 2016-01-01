@@ -101,7 +101,7 @@
     <Compile Include="ConsumerToken.cs" />
     <Compile Include="Initializer.cs" />
     <Compile Include="StatusTasks\IQueryBuilder.cs" />
-    <Compile Include="Loader.cs" />
+    <Compile Include="UpDater.cs" />
     <Compile Include="StatusTasks\QueryTimeLineBuilder.cs" />
     <Compile Include="StatusTasks\QueryUserStatusesBuilder.cs" />
     <Compile Include="TwitterContextBuilder.cs" />

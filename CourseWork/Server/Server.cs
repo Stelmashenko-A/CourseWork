@@ -23,7 +23,7 @@ namespace Server
             var notInitializedAccounts = SelectNotInitialized(accounts);
             var initializer = new Initializer(_storage);
             initializer.Initialize(notInitializedAccounts);
-            var upDater = new UpDater(_storage);
+            var upDater = new Updater(_storage);
             upDater.UpDate(accounts);
         }
 

@@ -28,6 +28,7 @@ namespace SelfHostedRestAPI
                 return new
                 {
                     Token = token,
+                    UserId = userIdentity.Claims.ElementAt(0)
                 };
             };
 
@@ -44,5 +45,6 @@ namespace SelfHostedRestAPI
                 return "Yay! You are authorized!";
             };
         }
+
     }
 }
