@@ -89,9 +89,15 @@
   <ItemGroup>
     <Compile Include="CredentialsStorage.cs" />
     <Compile Include="Model\InternalCredentials.cs" />
+    <Compile Include="Model\Tweet.cs" />
+    <Compile Include="Model\TwitterCoordinates.cs" />
+    <Compile Include="Model\TwitterEntities.cs" />
+    <Compile Include="Model\TwitterHashtag.cs" />
+    <Compile Include="Model\TwitterStatus.cs" />
+    <Compile Include="Model\TwitterUrl.cs" />
+    <Compile Include="Model\UserMention.cs" />
     <Compile Include="SafetyProvider.cs" />
     <Compile Include="IStorage.cs" />
-    <Compile Include="Model\Status.cs" />
     <Compile Include="Model\StatusModel.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Model\Account.cs" />

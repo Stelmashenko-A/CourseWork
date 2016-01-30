@@ -20,9 +20,7 @@ namespace Server
                 var statuses = new List<Status>();
                 var tweetQuery = queryBuilder.BuildTaskByMaxId(maxId).ToList();
 
-
                 statuses.AddRange(tweetQuery);
-
 
                 while (statuses.Count < count)
                 {
