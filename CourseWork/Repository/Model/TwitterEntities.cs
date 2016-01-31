@@ -4,8 +4,15 @@ namespace Repository.Model
 {
     public class TwitterEntities
     {
-        public List<TwitterUrl> TwitterUrl { get; set; }
-        public List<TwitterHashtag> TwitterHashtag { get; set; }
-        public List<UserMention> UserMentions { get; set; }
+        public TwitterEntities(IEnumerable<TwitterUrl> twitterUrl, IEnumerable<TwitterHashtag> twitterHashtag, IEnumerable<UserMention> userMentions)
+        {
+            TwitterUrl = twitterUrl;
+            TwitterHashtag = twitterHashtag;
+            UserMentions = userMentions;
+        }
+
+        public IEnumerable<TwitterUrl> TwitterUrl { get; }
+        public IEnumerable<TwitterHashtag> TwitterHashtag { get;}
+        public IEnumerable<UserMention> UserMentions { get; }
     }
 }

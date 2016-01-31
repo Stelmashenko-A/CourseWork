@@ -2,7 +2,7 @@
 {
     public class TwitterCredentials
     {
-        public TwitterCredentials(TwitterToken tokens, string screenName, ulong userId)
+        public TwitterCredentials(TwitterToken tokens, string screenName, long userId)
         {
             Tokens = tokens;
             ScreenName = screenName;
@@ -13,6 +13,6 @@
 
         public string ScreenName { get; private set; }
 
-        public ulong UserId { get; private set; }
+        public long UserId { get; private set; }
     }
 }

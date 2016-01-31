@@ -12,6 +12,7 @@ namespace Server
     public class Initializer
     {
         private readonly IStorage _storage;
+        private readonly StatusMapper statusMapper =new StatusMapper();
 
         protected IList<Status> LoadStatuses(IQueryBuilder queryBuilder, ulong maxId, int count = 3200)
         {
@@ -35,7 +36,8 @@ namespace Server
                 return statuses;
             }
             catch (Exception)
-            {
+            { 
+                //todo concrete exception
                 return new List<Status>();
             }
         }
@@ -69,7 +71,7 @@ namespace Server
             {
                 account.MaxId = result[0].StatusID;
             }
-            _storage.AddStatuses(result);
+            _storage.AddStatuses(statusMapper.Map(result));
             _storage.UpdateIdsAccount(account, true);
             _storage.SetFollowing(account,following);
         }

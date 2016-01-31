@@ -41,7 +41,7 @@ namespace SelfHostedRestAPI
             {
                 this.RequiresClaims(new[] { Request.Headers["Email"].First() });
                 string token, tokenSecret, userName;
-                ulong id;
+                long id;
 
                 TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
                     out tokenSecret,
@@ -50,7 +50,7 @@ namespace SelfHostedRestAPI
                 try
                 {
                     var acc = accountRepository.GetAccountById(id);
-                    var claimsUint = credentialsStorage.GetClaims(Request.Headers["Email"].First()) ?? new List<ulong>();
+                    var claimsUint = credentialsStorage.GetClaims(Request.Headers["Email"].First()) ?? new List<long>();
                     claimsUint.Add(id);
                     string authToken;
                     if (acc == null)
@@ -93,7 +93,7 @@ namespace SelfHostedRestAPI
             Get["/auth"] = parameters =>
             {
                 string token, tokenSecret, userName;
-                ulong id;
+                long id;
 
                 TwitterOauth.GetTokens(Request.Query["oauth_token"], Request.Query["oauth_verifier"], out token,
                     out tokenSecret,
@@ -123,13 +123,13 @@ namespace SelfHostedRestAPI
 
     public class SetTokenResponse
     {
-        public SetTokenResponse(ulong currentAccountId, string token)
+        public SetTokenResponse(long currentAccountId, string token)
         {
             CurrentAccountId = currentAccountId;
             Token = token;
         }
 
         public string Token { get; protected set; }
-        public ulong CurrentAccountId { get; protected set; }
+        public long CurrentAccountId { get; protected set; }
     }
 }

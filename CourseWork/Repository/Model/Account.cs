@@ -13,7 +13,7 @@ namespace Repository.Model
             RegistrationTime = DateTime.Now;
             IsInitialized = false;
             Id = "accounts/" + TwitterCredentials.UserId;
-            Following = new List<ulong>();
+            Following = new List<string>();
 
         }
 
@@ -29,7 +29,7 @@ namespace Repository.Model
 
         public bool IsInitialized { get; protected set; }
 
-        public IList<ulong> Following { get; set; } 
+        public IEnumerable<string> Following { get; set; } 
 
         public void MarkAsInitialized()
         {

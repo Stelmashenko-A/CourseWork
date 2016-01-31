@@ -24,7 +24,7 @@ namespace Repository
             _store.Initialize();
         }
 
-        public Account GetAccountById(ulong id)
+        public Account GetAccountById(long id)
         {
             using (var session = _store.OpenSession())
             {
@@ -71,7 +71,7 @@ namespace Repository
             }
         }
 
-        public void SetFollowing(Account account, IList<ulong> following)
+        public void SetFollowing(Account account, IEnumerable<string> following)
         {
             using (var session = _store.OpenSession())
             {
@@ -85,7 +85,7 @@ namespace Repository
 
         }
 
-        public IList<ulong> GetFollowing(ulong id)
+        public IEnumerable<string> GetFollowing(long id)
         {
             using (var session = _store.OpenSession())
             {
@@ -134,7 +134,7 @@ namespace Repository
         }
 
 
-        public Page GetUserLine(ulong userId, int pageIndex, int pageSize, ulong pageHeaderId = ulong.MaxValue)
+        public Page GetUserLine(long userId, int pageIndex, int pageSize, long pageHeaderId = long.MaxValue)
         {
             var following = GetFollowing(userId);
             using (new TransactionScope())
@@ -142,13 +142,13 @@ namespace Repository
                 using (var session = _store.OpenSession())
                 {
                     var skipCounter = 0;
-                    if (pageHeaderId != ulong.MaxValue)
+                    if (pageHeaderId != long.MaxValue)
                     {
                         skipCounter = session.Query<TwitterStatus>()
                             .Count(status => status.Id > pageHeaderId);
                     }
                     var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
-                        .Where(status => status.UserId.In(following))
+                        .Where(status => status.UserIdStr.In(following))
                         .Skip(skipCounter)
                         .Take(pageSize).ToList();
                     var page = new Page(t);
@@ -157,7 +157,7 @@ namespace Repository
             }
         }
 
-        public IQueryable<TwitterStatus> GetAllStatuses(ulong userId)
+        public IQueryable<TwitterStatus> GetAllStatuses(long userId)
         {
             using (var session = _store.OpenSession())
             {
@@ -176,7 +176,7 @@ namespace Repository
             }
         }
 
-        public void AddStatuses(IList<TwitterStatus> statuses)
+        public void AddStatuses(IEnumerable<TwitterStatus> statuses)
         {
             using (var session = _store.OpenSession())
             {
@@ -188,7 +188,7 @@ namespace Repository
             }
         }
 
-        public ulong GetLineHead(ulong id)
+        public long GetLineHead(long id)
         {
             using (var session = _store.OpenSession())
             {

@@ -23,7 +23,7 @@ namespace Server
         }
 
         public static void GetTokens(string oautToken, string verifier, out string token, out string tokenSecret,
-            out string screenName, out ulong id)
+            out string screenName, out long id)
         {
             var requestToken = new OAuthRequestToken {Token = oautToken};
             var service = new TwitterService(ConsumerToken.ConsumerKey,
@@ -32,7 +32,7 @@ namespace Server
             token = accessToken.Token;
             tokenSecret = accessToken.TokenSecret;
             screenName = accessToken.ScreenName;
-            id = (ulong) accessToken.UserId;
+            id = accessToken.UserId;
         }
     }
 }

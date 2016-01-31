@@ -1,13 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Repository.Model
+﻿namespace Repository.Model
 {
     public class UserMention
     {
-        public string Name { get; set; }
-        public List<int> Indices { get; set; }
-        public string ScreenName { get; set; }
-        public int Id { get; set; }
-        public string IdStr { get; set; }
+        public UserMention(string name, string screenName, long id, string idStr, int start, int end)
+        {
+            Name = name;
+            ScreenName = screenName;
+            Id = id;
+            IdStr = idStr;
+            Start = start;
+            End = end;
+        }
+
+        public string Name { get;  }
+        public string ScreenName { get;  }
+        public long Id { get;  }
+        public string IdStr { get; }
+        public int Start { get; }
+        public int End { get; }
     }
 }

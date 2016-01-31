@@ -34,7 +34,7 @@ namespace Repository
             }
         }
 
-        public IList<ulong> GetClaims(string email)
+        public IList<long> GetClaims(string email)
         {
             using (var session = Store.OpenSession())
             {
@@ -60,7 +60,7 @@ namespace Repository
             }
         }
 
-        public void AddAccount(string email, ulong id)
+        public void AddAccount(string email, long id)
         {
             using (var session = Store.OpenSession())
             {

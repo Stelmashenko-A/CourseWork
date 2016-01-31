@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="ConsumerToken.cs" />
     <Compile Include="Initializer.cs" />
+    <Compile Include="StatusMapper.cs" />
     <Compile Include="StatusTasks\IQueryBuilder.cs" />
     <Compile Include="UpDater.cs" />
     <Compile Include="StatusTasks\QueryTimeLineBuilder.cs" />

@@ -39,17 +39,17 @@ namespace SelfHostedRestAPI
                 }
                 var lineHeadString = Request.Headers["LineHead"].First();
                 var page = int.Parse(pageString);
-                var lineHead = ulong.MaxValue;
+                var lineHead = long.MaxValue;
                 try
                 {
-                    lineHead = ulong.Parse(lineHeadString);
+                    lineHead = long.Parse(lineHeadString);
                 }
                 catch (Exception)
                 {
                     // ignored
                 }
 
-                var id = ulong.Parse(parameters.value);
+                var id = long.Parse(parameters.value);
                 var r = _storage.GetUserLine(id, page, 7, lineHead);
                 JsonSettings.MaxJsonLength=int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));

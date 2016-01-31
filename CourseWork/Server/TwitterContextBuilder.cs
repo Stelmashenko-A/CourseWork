@@ -16,7 +16,7 @@ namespace Server
                     OAuthToken = credentials.Tokens.Token,
                     OAuthTokenSecret = credentials.Tokens.TokenSecret,
                     ScreenName = credentials.ScreenName,
-                    UserID = credentials.UserId
+                    UserID = (ulong)credentials.UserId
                 }
             };
             return new TwitterContext(singleUserAuthorizer);
