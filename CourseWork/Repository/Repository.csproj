@@ -30,14 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LinqToTwitter.AspNet, Version=3.1.2.18330, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LinqToTwitter.3.1.2\lib\net45\LinqToTwitter.AspNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LinqToTwitterPcl, Version=3.1.2.18329, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
-      <HintPath>..\packages\LinqToTwitter.3.1.2\lib\net45\LinqToTwitterPcl.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="NetTopologySuite">
       <HintPath>..\RestAPI\Bin\NetTopologySuite.dll</HintPath>
     </Reference>
@@ -89,7 +81,7 @@
   <ItemGroup>
     <Compile Include="CredentialsStorage.cs" />
     <Compile Include="Model\InternalCredentials.cs" />
-    <Compile Include="Model\Tweet.cs" />
+    <Compile Include="Model\Description.cs" />
     <Compile Include="Model\TwetterUser.cs" />
     <Compile Include="Model\TwitterCoordinates.cs" />
     <Compile Include="Model\TwitterEntities.cs" />

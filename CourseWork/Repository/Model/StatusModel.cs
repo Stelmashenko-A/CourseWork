@@ -1,8 +1,7 @@
-﻿using LinqToTwitter;
-
+﻿
 namespace Repository.Model
 {
-    public class StatusModel
+   /* public class StatusModel
     {
         public string Id { get; protected set; }
         public Status Status { get; protected set; }
@@ -12,5 +11,5 @@ namespace Repository.Model
             Status = status;
             Id = "statusmodels/" + status.StatusID;
         }
-    }
+    }*/
 }

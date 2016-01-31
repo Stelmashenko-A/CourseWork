@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using LinqToTwitter;
 
 namespace Repository.Model
 {
     public class Page
     {
-        public Page(IEnumerable<Status> statuses)
+        public Page(IEnumerable<TwitterStatus> statuses)
         {
             Statuses = statuses;
         }
 
-        public IEnumerable<Status> Statuses { get; }  
+        public IEnumerable<TwitterStatus> Statuses { get; }  
     }
 }

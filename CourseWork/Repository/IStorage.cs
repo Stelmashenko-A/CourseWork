@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using LinqToTwitter;
 using Repository.Model;
 using Account = Repository.Model.Account;
 
@@ -15,10 +14,10 @@ namespace Repository
         void ResetTokens(string screenName, TwitterToken tokens);
         void UpdateIdsAccount(Account account, bool markAsInitialized = false);
         Page GetUserLine(ulong userId, int pageIndex, int pageSize, ulong pageHeaderId = ulong.MaxValue);
-        IQueryable<Status> GetAllStatuses(uint userId);
-        IQueryable<Status> GetAllStatuses(string userName);
-        void AddStatuses(IList<Status> statuses);
+        IQueryable<TwitterStatus> GetAllStatuses(ulong userId);
+        IQueryable<TwitterStatus> GetAllStatuses(string userName);
+        void AddStatuses(IList<TwitterStatus> statuses);
         ulong GetLineHead(ulong id);
-        void SetFollowing(Account account, IList<string> following);
+        void SetFollowing(Account account, IList<ulong> following);
     }
 }

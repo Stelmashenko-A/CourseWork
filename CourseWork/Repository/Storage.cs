@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using LinqToTwitter;
 using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Document;
@@ -72,7 +71,7 @@ namespace Repository
             }
         }
 
-        public void SetFollowing(Account account, IList<string> following)
+        public void SetFollowing(Account account, IList<ulong> following)
         {
             using (var session = _store.OpenSession())
             {
@@ -86,11 +85,12 @@ namespace Repository
 
         }
 
-        public IList<string> GetFollowing(ulong id)
+        public IList<ulong> GetFollowing(ulong id)
         {
             using (var session = _store.OpenSession())
             {
                 var account = session.Query<Account>().FirstOrDefault(x => x.TwitterCredentials.UserId == id);
+                
                 return account?.Following;
             }
         }
@@ -144,45 +144,45 @@ namespace Repository
                     var skipCounter = 0;
                     if (pageHeaderId != ulong.MaxValue)
                     {
-                        skipCounter = session.Query<StatusModel>()
-                            .Count(status => status.Status.StatusID > pageHeaderId);
+                        skipCounter = session.Query<TwitterStatus>()
+                            .Count(status => status.Id > pageHeaderId);
                     }
-                    var t = session.Query<StatusModel>().OrderByDescending(x => x.Status.CreatedAt)
-                        .Where(status => status.Status.User.Name.In(following))
+                    var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                        .Where(status => status.UserId.In(following))
                         .Skip(skipCounter)
-                        .Take(pageSize).Select(item => item.Status).ToList();
+                        .Take(pageSize).ToList();
                     var page = new Page(t);
                     return page;
                 }
             }
         }
 
-        public IQueryable<Status> GetAllStatuses(uint userId)
+        public IQueryable<TwitterStatus> GetAllStatuses(ulong userId)
         {
             using (var session = _store.OpenSession())
             {
-                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId),
-                    item => item.Status);
+                return Queryable.Select(session.Query<TwitterStatus>().Where(status => status.UserId == userId),
+                    item => item);
             }
         }
 
-        public IQueryable<Status> GetAllStatuses(string userName)
+        public IQueryable<TwitterStatus> GetAllStatuses(string userName)
         {
             using (var session = _store.OpenSession())
             {
                 var userId = GetAccountByScreenName(userName).TwitterCredentials.UserId;
-                return Queryable.Select(session.Query<StatusModel>().Where(status => status.Status.UserID == userId),
-                    item => item.Status);
+                return Queryable.Select(session.Query<TwitterStatus>().Where(status => status.UserId == userId),
+                    item => item);
             }
         }
 
-        public void AddStatuses(IList<Status> statuses)
+        public void AddStatuses(IList<TwitterStatus> statuses)
         {
             using (var session = _store.OpenSession())
             {
-                foreach (var statuse in statuses)
+                foreach (var status in statuses)
                 {
-                    session.Store(new StatusModel(statuse));
+                    session.Store(status);
                 }
                 session.SaveChanges();
             }
@@ -192,7 +192,7 @@ namespace Repository
         {
             using (var session = _store.OpenSession())
             {
-                return session.Query<StatusModel>().OrderByDescending(x => x.Status.CreatedAt).First().Status.StatusID;
+                return session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt).First().Id;
             }
         }
     }

@@ -12,6 +12,8 @@ namespace Repository.Model
 
         public int Iterations { get; protected set; }
 
+        public IList<ulong> TwitterIds { get; protected set; }
+
         public InternalCredentials(string email, string passwordHash, string salt, int iterations)
         {
             Email = email;
@@ -21,7 +23,7 @@ namespace Repository.Model
             Iterations = iterations;
         }
 
-        public IList<ulong> TwitterIds { get; protected set; }
+        
 
         public void AddId(ulong id)
         {
