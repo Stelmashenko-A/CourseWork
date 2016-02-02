@@ -15,7 +15,7 @@
                 var token = resp.Token;
                 $cookies.put('token', token);
                 $cookies.put('email', $scope.email);
-                $location.url = '#/first-accaunt';
+                $location.path("first-accaunt");
             });
         }
     }

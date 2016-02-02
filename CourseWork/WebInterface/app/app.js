@@ -10,7 +10,7 @@
             templateUrl: 'UserAuth/Login/login.html',
             controller: 'LoginController'
         });
-        $routeProvider.when('/firstAccaunt',
+        $routeProvider.when('/first-accaunt',
         {
             templateUrl: 'FirstAccaunt/firstAccaunt.html',
             controller: 'FirstAccauntController'

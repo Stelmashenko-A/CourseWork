@@ -20,7 +20,7 @@ namespace Server
         private static IList<Status> Load(IQueryBuilder queryBuilder, ulong maxId, int count = 2000)
         {
             var statuses = new List<Status>();
-            //todo limit exception
+            //todo limit exception System.AggregateException, message: Rate limit exceeded - Please visit the LINQ to Twitter FAQ (at the HelpLink) for help on resolving this error.
             var tweetQuery = queryBuilder.BuildTaskByMinId(maxId + 1).ToList();
 
             
