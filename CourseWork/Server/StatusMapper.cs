@@ -16,7 +16,7 @@ namespace Server
                 status.Favorited, status.Truncated, status.CreatedAt, status.StatusID.ToString(), Map(status.Entities),
                 status.InReplyToUserID.ToString(), Map(status.Contributors), status.Text, status.RetweetCount,
                 status.InReplyToStatusID.ToString(), (long)status.StatusID, status.Retweeted, status.PossiblySensitive,
-                (long)status.User.UserID, status.InReplyToScreenName, status.Source,status.User.UserID.ToString());
+                long.Parse(status.User.UserIDResponse), status.InReplyToScreenName, status.Source,status.User.UserIDResponse);
         }
 
         public IEnumerable<TwitterStatus> Map(IEnumerable<Status> statuses)

@@ -142,11 +142,13 @@ namespace Repository
                 using (var session = _store.OpenSession())
                 {
                     var skipCounter = 0;
-                    if (pageHeaderId != long.MaxValue)
+                    if (pageHeaderId != -1)
                     {
                         skipCounter = session.Query<TwitterStatus>()
-                            .Count(status => status.Id > pageHeaderId);
+                            .Count(status => status.InternalId > pageHeaderId);
                     }
+                    var e = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                        .Where(status => status.UserIdStr.In(following)).ToList();
                     var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
                         .Where(status => status.UserIdStr.In(following))
                         .Skip(skipCounter)

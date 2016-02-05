@@ -59,18 +59,22 @@ namespace Server
             var twitterContextBuilder = new TwitterContextBuilder();
             var context = twitterContextBuilder.Build(account.TwitterCredentials);
             IQueryBuilder queryBuilder = new QueryTimeLineBuilder(context);
+
             var result = LoadStatuses(queryBuilder, account.MinId - 1);
             result= result.OrderByDescending(x => x.CreatedAt).ToList();
             account.MarkAsInitialized();
-            account.MinId = result[result.Count - 1].StatusID;
-            var following = Followers(context, account.TwitterCredentials.ScreenName);
-
-
-
-            if (account.MaxId < result[0].StatusID)
+            if (result.Count != 0)
             {
-                account.MaxId = result[0].StatusID;
+                account.MinId = result[result.Count - 1].StatusID;
+                if (account.MaxId < result[0].StatusID)
+                {
+                    account.MaxId = result[0].StatusID;
+                }
             }
+            var following = Followers(context, account.TwitterCredentials.ScreenName);       
+
+            
+
             _storage.AddStatuses(statusMapper.Map(result));
             _storage.UpdateIdsAccount(account, true);
             _storage.SetFollowing(account,following);
@@ -108,7 +112,7 @@ namespace Server
                     
                 }
 
-                if (friendship != null) result.AddRange(friendship.Users.Select(x=>x.Name));
+                if (friendship != null) result.AddRange(friendship.Users.Select(x=>x.UserIDResponse));
             } while (cursor != 0);
             var s = friendship;
             return result;

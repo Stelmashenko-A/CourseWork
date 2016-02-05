@@ -28,8 +28,9 @@ namespace Repository.Model
             InReplyToScreenName = inReplyToScreenName;
             Source = source;
             UserIdStr = userIdStr;
+            InternalId = Id;
         }
-
+        internal long InternalId { get; }
         public TwitterCoordinates Coordinates { get; }
         public bool Favorited { get; }
         public bool Truncated { get; }
