@@ -1,16 +1,12 @@
-﻿
+﻿<div class="container" style="padding-top: 70px;">
+    <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 
-<div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
-    <div class="well" ng-repeat='item in reddit.items'>
-        <span class='score'>{{item.Text}}</span>
-        <span class='title'>
+        <div class="well" ng-repeat='item in reddit.items'>
+            <span class='score'>{{item.Text}}</span>
             <a ng-href='{{item.Text}}' target='_blank'>{{item.SinceId}}</a>
-        </span>
-        <small>
-            by {{item.author}} -
-            <a ng-href='http://reddit.com{{item.permalink}}' target='_blank'>{{item.num_comments}} comments</a>
-        </small>
-        <div style='clear: both;'></div>
+            <div style='clear: both;'></div>
+        </div>
+        <div ng-show='reddit.busy'>Loading data...</div>
+
     </div>
-    <div ng-show='reddit.busy'>Loading data...</div>
 </div>
