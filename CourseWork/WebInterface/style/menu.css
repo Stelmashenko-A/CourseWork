@@ -84,6 +84,7 @@
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
+    background: #2E3E4C
 }
 
 .btn-exit:hover {
@@ -94,4 +95,59 @@
 }
 .btn-exit:hover a{
     color: white;
+}
+
+@media(max-width:570px){
+	.navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-fixed-top {
+		top: 0;
+	}
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+		margin-top: 7.5px;
+	}
+	.navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+  		display:block !important;
+	}
+	.navbar-default .navbar-toggle{
+		background-color: #444F6C;
+		border: 0;
+		border-radius: 2px;
+	}
+	.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover{
+		background-color: #28C3F5;
+	}
+	.navbar-default .navbar-toggle .icon-bar{
+		background-color: #FFF;
+	}
+	.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+		border: 0;
+	}
+	.navbar-collapse, .navbar-form{
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-o-box-shadow: none;
+		box-shadow: none;
+	}
+	.navbar-nav li:hover{
+		background-color: #3B465B
+	}
 }
