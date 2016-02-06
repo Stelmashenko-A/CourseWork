@@ -94,6 +94,7 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\src\credentials.js" />
+    <Content Include="style\menu.css" />
     <Content Include="TimeLine\timeLine.html" />
     <Content Include="TimeLine\TimeLineController.js" />
     <Content Include="UserAuth\auth.js" />
