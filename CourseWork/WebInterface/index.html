@@ -10,27 +10,35 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="Scripts/angular.min.js"></script>
+<script src="Scripts/angular-route.js"></script>
+<script src="Scripts/angular-cookies.js"></script>
+<script src="app/app.js"></script>
 <html ng-app="twittyApp">
 <head>
     <meta charset="utf-8">
 </head>
 <body>
+     
     <div data-ng-controller="IndexController" data-ng-init="init()"></div>
+    <nav ng-include="'/User/user.html'" ng-if="location.path() !==  '/login' && location.path() !==  '/registration' "></nav>
+   
 <ng-view>
     
 </ng-view>
-<script src="Scripts/angular.min.js"></script>
-<script src="Scripts/angular-route.js"></script>
-<script src="Scripts/angular-cookies.js"></script>
+
     <script src="Scripts/ng-infinite-scroll.js"></script><script type="text/javascript" src="/Scripts/Endless.js"></script>
-<script src="app/app.js"></script>
+
+<script src="User/UserController.js"></script>
 <script src="UserAuth/Login/LoginController.js"></script>
 <script src="UserAuth/Registration/RegistrationController.js"></script>
 <script src="IndexController.js"></script>
 <script src="FirstAccaunt/FirstAccauntController.js"></script>
 <script src="FirstAccaunt/TwitterTokensController.js"></script>
 <script src="TimeLine/TimeLineController.js"></script>
+<script src="User/UserController.js"></script>
 
 </body>
 </html>

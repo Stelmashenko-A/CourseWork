@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="bootstrapHelloWorld.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -894,6 +895,8 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="UserAuth\Registration\registration.html" />
+    <Content Include="User\user.html" />
+    <Content Include="User\UserController.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

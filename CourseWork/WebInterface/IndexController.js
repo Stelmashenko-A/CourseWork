@@ -1,7 +1,9 @@
-﻿twittyApp.controller('IndexController',
-    function IndexController($scope, $http, $cookies, $location) {
+﻿
+twittyApp.controller('IndexController',
+    function IndexController($scope, $http, $cookies, $location,$rootScope) {
+        $rootScope.location = $location;
         var absUrl = $location.absUrl();
-        if (absUrl.contains('/?'))
+        if (absUrl.indexOf('/?') != -1)
             {
            var o = $cookies.getAll();
                 var email = o.email;
