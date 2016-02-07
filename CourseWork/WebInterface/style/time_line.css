@@ -1,0 +1,20 @@
+.twitt{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.tweet-btm {
+    margin-top: 10px;
+    margin-bottom: -10px;
+    color: #aab8c2;
+    font-size: 18px;
+    cursor: pointer;
+}
+.tweet-btm:hover{
+    color: #1ab188;
+}
+
+.tweet-well
+{
+    background: #F5FFFC;
+    margin: 5px;
+}

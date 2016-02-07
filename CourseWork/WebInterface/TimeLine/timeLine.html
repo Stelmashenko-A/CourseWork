@@ -1,12 +1,35 @@
-﻿<div class="container" style="padding-top: 70px;">
-    <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
+﻿<div class="container-fluid" style="padding-top: 51px;">
+    <div class="row">
+        <div class="col-lg-2 col-md-2"></div>
+        <div class="col-lg-8 col-md-8">
+            <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='0'>
 
-        <div class="well" ng-repeat='item in reddit.items'>
-            <span class='score'>{{item.Text}}</span>
-            <a ng-href='{{item.Text}}' target='_blank'>{{item.SinceId}}</a>
-            <div style='clear: both;'></div>
+                <div class="well tweet-well" ng-repeat='item in reddit.items'>
+
+                    <div class="row">
+                        <div class="twitt">
+                            <div class="twit-text">
+                                <span>{{item.Text}}</span>
+                            </div>
+                            
+                                <div class="row">
+                                <div class="col-xs-1 tweet-btm">
+                                    <p><i class="glyphicon glyphicon-bullhorn"></i></p>
+                                </div>
+                                <div class="col-xs-1 tweet-btm">
+                                    <p><i class="glyphicon glyphicon-retweet"></i></p>
+                                </div>
+                                <div class="col-xs-1 tweet-btm">
+                                    <p><i class="glyphicon glyphicon-star"></i></p>
+                                </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div ng-show='reddit.busy'>Loading data...</div>
+            </div>
         </div>
-        <div ng-show='reddit.busy'>Loading data...</div>
-
+        <div class="col-lg-2 col-md-2"></div>
     </div>
 </div>
