@@ -18,7 +18,7 @@
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Page': this.page,
-                    'LineHead': this.after
+                    'LineHead': this.after++
                 }
             }).success(function (data) {
                 if (data != "") {
