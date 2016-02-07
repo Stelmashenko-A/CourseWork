@@ -197,6 +197,8 @@ namespace Repository
                 return session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt).First().Id;
             }
         }
+
+
     }
 }
    

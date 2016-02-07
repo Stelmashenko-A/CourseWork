@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Nancy;
 using Nancy.Json;
+using Nancy.Security;
 using Repository;
 using TestData;
 
@@ -32,6 +33,10 @@ namespace SelfHostedRestAPI
             };
             Post["/tweets/user-time-line/{value}"] = parameters =>
             {
+                var id = long.Parse(parameters.value);
+                var claims = (string) id.ToString();
+                this.RequiresClaims(new[] { claims });
+
                 var pageString = Request.Headers["Page"].First();
                 if (!Request.Headers.Keys.Contains("LineHead"))
                 {
@@ -49,7 +54,7 @@ namespace SelfHostedRestAPI
                     // ignored
                 }
 
-                var id = long.Parse(parameters.value);
+                
                 var r = _storage.GetUserLine(id, page, 20, lineHead);
                 JsonSettings.MaxJsonLength=int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));

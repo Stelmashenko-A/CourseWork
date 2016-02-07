@@ -34,11 +34,13 @@ twittyApp.controller('IndexController',
 
             var email = cookies.email;
             var Token = cookies.token;
-            if (angular.isUndefined(email) || angular.isUndefined(Token)) {
+            var lastReadedTweetId = cookies.lastReadedTweetId;
+            if (angular.isUndefined(email) || angular.isUndefined(Token)||angular.isUndefined(lastReadedTweetId)) {
                 $location.path("/login");
             } else {
                 $scope.email = email;
                 $scope.Token = Token;
+                $scope.lastReadedTweetId = lastReadedTweetId;
                 $location.path("/time-line");
 
             }

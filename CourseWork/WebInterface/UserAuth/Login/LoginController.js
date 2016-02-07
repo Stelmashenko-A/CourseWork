@@ -16,8 +16,9 @@
                 $cookies.put('token', token);
                 $cookies.put('email', $scope.email);
                 $cookies.put('userId', resp.UserId);
+
                 $location.path("/time-line");
             });
         }
     }
-)
+    )
