@@ -65,6 +65,40 @@ namespace SelfHostedRestAPI
                 };
             };
 
+            Post["/tweets/user-time-line/unshown/{value}"] = parameters =>
+            {
+                var id = long.Parse(parameters.value);
+                var claims = (string)id.ToString();
+                this.RequiresClaims(new[] { claims });
+
+                var pageString = Request.Headers["Page"].First();
+                if (!Request.Headers.Keys.Contains("LineHead"))
+                {
+                    return null;
+                }
+                var lineHeadString = Request.Headers["LineHead"].First();
+                var page = int.Parse(pageString);
+                var lineHead = long.MaxValue;
+                try
+                {
+                    lineHead = long.Parse(lineHeadString);
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+
+
+                var r = _storage.GetPageBefore(id, page, 20, lineHead);
+                JsonSettings.MaxJsonLength = int.MaxValue;
+                var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
+                return new Response
+                {
+                    ContentType = "application/json",
+                    Contents = s => s.Write(jsonBytes, 0, jsonBytes.Length)
+                };
+            };
+
             Get["/tweets/user-time-line-filtered/{id:long}/{count:int}"] = parameters =>
             {
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user-time-line-filtered"));
