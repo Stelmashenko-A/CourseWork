@@ -5,7 +5,7 @@
         $scope.login = function () {
             $http({
                 method: 'POST',
-                url: 'http://127.0.0.1:12008/auth',
+               url: 'http://192.168.0.9:12008/auth',// url: 'http://127.0.0.1:12008/auth',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'UserName': $scope.email,

@@ -19,5 +19,6 @@ namespace Repository
         void AddStatuses(IEnumerable<TwitterStatus> statuses);
         long GetLineHead(long id);
         void SetFollowing(Account account, IEnumerable<string> following);
+        Page GetPageBefore(long userId, int pageIndex, int pageSize, long pageHeaderId = 0);
     }
 }

@@ -8,7 +8,7 @@
         static void Main(string[] args)
         {
             var uri =
-                new Uri("http://127.0.0.1:12008");
+                new Uri("http://192.168.0.9:12008");
 
             using (var host = new NancyHost(uri))
             {

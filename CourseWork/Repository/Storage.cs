@@ -147,8 +147,35 @@ namespace Repository
                         skipCounter = session.Query<TwitterStatus>()
                             .Count(status => status.InternalId > pageHeaderId);
                     }
-                    var e = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
-                        .Where(status => status.UserIdStr.In(following)).ToList();
+                    var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                        .Where(status => status.UserIdStr.In(following))
+                        .Skip(skipCounter)
+                        .Take(pageSize).ToList();
+                    var page = new Page(t);
+                    return page;
+                }
+            }
+        }
+
+        public Page GetPageBefore(long userId, int pageIndex, int pageSize, long pageHeaderId = 0)
+        {
+            var following = GetFollowing(userId);
+            using (new TransactionScope())
+            {
+                using (var session = _store.OpenSession())
+                {
+                    var skipCounter = 0;
+                    if (pageHeaderId != -1)
+                    {
+                        skipCounter = session.Query<TwitterStatus>()
+                            .Count(status => status.InternalId > pageHeaderId);
+                        skipCounter -= (pageIndex+1)*pageSize;
+                    }
+                    if (skipCounter <= 0)
+                    {
+                        return new Page(session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                            .Where(status => status.UserIdStr.In(following)).ToList());
+                    }
                     var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
                         .Where(status => status.UserIdStr.In(following))
                         .Skip(skipCounter)
