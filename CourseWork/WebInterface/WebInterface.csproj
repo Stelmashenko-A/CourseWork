@@ -98,6 +98,7 @@
     <Content Include="style\time_line.css" />
     <Content Include="TimeLine\timeLine.html" />
     <Content Include="TimeLine\TimeLineController.js" />
+    <Content Include="TimeLine\UnshownController.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
     <Content Include="UserAuth\Login\login.html" />

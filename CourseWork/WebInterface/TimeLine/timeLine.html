@@ -1,31 +1,39 @@
 ﻿<div class="container-fluid" style="padding-top: 51px;">
+
     <div class="row">
         <div class="col-lg-2 col-md-2"></div>
         <div class="col-lg-8 col-md-8">
+            <div ng-controller="UnshownController">
+                <p ng-show="status.loading">loading...</p>
+                <div id="fixed" when-scrolled="loadMore()" scroll-bottom-on="status.loaded">
+                    
+                        <div class="well tweet-well" ng-repeat='item in items'>
 
-         <!--   <div class="well tweet-well" ng-repeat='item in Unshown.items'>
+                            <div class="row">
+                                <div class="twitt">
+                                    <div class="twit-text">
+                                        <span>{{item.id}} {{item.IdStr}}</span>
+                                    </div>
 
-                <div class="row">
-                    <div class="twitt">
-                        <div class="twit-text">
-                            <span>{{item.Text}} {{item.IdStr}}</span>
+                                    <div class="row">
+                                        <div class="col-xs-1 tweet-btm">
+                                            <p><i class="glyphicon glyphicon-bullhorn"></i></p>
+                                        </div>
+                                        <div class="col-xs-1 tweet-btm">
+                                            <p><i class="glyphicon glyphicon-retweet"></i></p>
+                                        </div>
+                                        <div class="col-xs-1 tweet-btm">
+                                            <p><i class="glyphicon glyphicon-star"></i></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xs-1 tweet-btm">
-                                <p><i class="glyphicon glyphicon-bullhorn"></i></p>
-                            </div>
-                            <div class="col-xs-1 tweet-btm">
-                                <p><i class="glyphicon glyphicon-retweet"></i></p>
-                            </div>
-                            <div class="col-xs-1 tweet-btm">
-                                <p><i class="glyphicon glyphicon-star"></i></p>
-                            </div>
-                        </div>
-
-                    </div>
+                    
                 </div>
-            </div>-->
+            </div>
+
             <!-- Readed timeline -->
             <div infinite-scroll='Shown.nextPage()' infinite-scroll-disabled='Shown.busy' infinite-scroll-distance='0'>
                 <div class="well tweet-well" ng-repeat='item in Shown.items'>

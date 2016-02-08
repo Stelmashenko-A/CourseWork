@@ -46,5 +46,10 @@ twittyApp.controller('IndexController',
             }
 
         }
+        $scope.scrolling=function()
+        {
+            var t= 0;
+            var i = t;
+        }
     }
 )

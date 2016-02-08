@@ -15,30 +15,33 @@
 <script src="Scripts/angular.min.js"></script>
 <script src="Scripts/angular-route.js"></script>
 <script src="Scripts/angular-cookies.js"></script>
+
 <script src="app/app.js"></script>
 <html ng-app="twittyApp">
+
 <head>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta charset="utf-8">
 </head>
-<body>
-     
+
+<body >
     <div data-ng-controller="IndexController" data-ng-init="init()"></div>
     <nav ng-include="'/User/user.html'" ng-if="location.path() !==  '/login' && location.path() !==  '/registration' "></nav>
-<ng-view>
-    
-</ng-view>
+    <ng-view>
 
-    <script src="Scripts/ng-infinite-scroll.js"></script><script type="text/javascript" src="/Scripts/Endless.js"></script>
+    </ng-view>
+    <script src="Scripts/ng-infinite-scroll.js"></script>
+    <script type="text/javascript" src="/Scripts/Endless.js"></script>
 
-<script src="User/UserController.js"></script>
-<script src="UserAuth/Login/LoginController.js"></script>
-<script src="UserAuth/Registration/RegistrationController.js"></script>
-<script src="IndexController.js"></script>
-<script src="FirstAccaunt/FirstAccauntController.js"></script>
-<script src="FirstAccaunt/TwitterTokensController.js"></script>
-<script src="TimeLine/TimeLineController.js"></script>
-<script src="User/UserController.js"></script>
-
+    <script src="User/UserController.js"></script>
+    <script src="UserAuth/Login/LoginController.js"></script>
+    <script src="UserAuth/Registration/RegistrationController.js"></script>
+    <script src="IndexController.js"></script>
+    <script src="FirstAccaunt/FirstAccauntController.js"></script>
+    <script src="FirstAccaunt/TwitterTokensController.js"></script>
+    <script src="TimeLine/TimeLineController.js"></script>
+    <script src="User/UserController.js"></script>
+<script src="TimeLine/UnshownController.js"></script>
 </body>
+
 </html>
