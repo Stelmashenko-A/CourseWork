@@ -27,8 +27,6 @@ twittyApp.controller('UnshownController', function UnshownController($scope, $ti
         }
         return deferred.promise;
     };
-
-    $scope.loadMore();
 });
 
 twittyApp.directive('whenScrolled', function ($timeout, $window, $document) {
@@ -45,6 +43,13 @@ twittyApp.directive('whenScrolled', function ($timeout, $window, $document) {
         
         var raw = elm[0];*/
 
+                var sh = elm[0].scrollHeight;
+                scope.$eval(attr.whenScrolled).then(function () {
+                    $timeout(function () {
+                        var t = elm[0].scrollHeight - sh;
+                        $window.scrollTo(0, t);
+                    })
+                });
         angular.element($window).bind('scroll', function () {
             if ($window.pageYOffset <= 100) {
                 var sh = elm[0].scrollHeight;
@@ -54,9 +59,10 @@ twittyApp.directive('whenScrolled', function ($timeout, $window, $document) {
                         $window.scrollTo(0, t);
                     })
                 });
-                ;
             }
         });
+        
+        
     };
 }).directive('scrollBottomOn', ['$timeout', function ($timeout) {
     return function (scope, elm, attr) {
