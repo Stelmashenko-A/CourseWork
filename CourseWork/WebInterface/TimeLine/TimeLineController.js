@@ -29,7 +29,6 @@
                 for (var i = 0; i < items.length; i++) {
                     this.items.push(items[i]);
                 }
-                //     this.after = "t3_" + this.items[this.items.length - 1].id;
 
                 this.after = this.items[this.items.length - 1].IdStr;
                 this.page++;

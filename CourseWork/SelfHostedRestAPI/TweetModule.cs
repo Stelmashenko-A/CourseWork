@@ -89,7 +89,7 @@ namespace SelfHostedRestAPI
                 }
 
 
-                var r = _storage.GetPageBefore(id, page, 20, lineHead);
+                var r = _storage.GetPageBefore(id, page, 10, lineHead);
                 JsonSettings.MaxJsonLength = int.MaxValue;
                 var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
                 return new Response

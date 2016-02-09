@@ -4,15 +4,15 @@
         <div class="col-lg-2 col-md-2"></div>
         <div class="col-lg-8 col-md-8">
             <div ng-controller="UnshownController">
-                <p ng-show="status.loading">loading...</p>
-                <div id="fixed" when-scrolled="loadMore()" scroll-bottom-on="status.loaded">
+               <!-- <p ng-show="status.loading">loading...</p>-->
+                <div id="fixed" when-scrolled="loadMore()">
                     
                         <div class="well tweet-well" ng-repeat='item in items'>
 
                             <div class="row">
                                 <div class="twitt">
                                     <div class="twit-text">
-                                        <span>{{item.id}} {{item.IdStr}}</span>
+                                        <span>{{item.Text}} {{item.IdStr}}</span>
                                     </div>
 
                                     <div class="row">
