@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
-    <Content Include="bootstrapHelloWorld.html" />
+    <Content Include="app\tweetViewBuilder.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -98,6 +98,7 @@
     <Content Include="style\time_line.css" />
     <Content Include="TimeLine\timeLine.html" />
     <Content Include="TimeLine\TimeLineController.js" />
+    <Content Include="TimeLine\timelineSynchronizationBlock.js" />
     <Content Include="TimeLine\UnshownController.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
