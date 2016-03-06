@@ -96,10 +96,11 @@
     <Content Include="Scripts\src\credentials.js" />
     <Content Include="style\menu.css" />
     <Content Include="style\time_line.css" />
+    <Content Include="TimeLine\shown.js" />
     <Content Include="TimeLine\timeLine.html" />
     <Content Include="TimeLine\TimeLineController.js" />
     <Content Include="TimeLine\timelineSynchronizationBlock.js" />
-    <Content Include="TimeLine\UnshownController.js" />
+    <Content Include="TimeLine\unshown.js" />
     <Content Include="UserAuth\auth.js" />
     <Content Include="UserAuth\Login\LoginController.js" />
     <Content Include="UserAuth\Login\login.html" />

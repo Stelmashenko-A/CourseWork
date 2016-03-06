@@ -30,5 +30,5 @@
                 templateUrl: 'User/user.html',
                 controller: 'UserController'
             });   
-
+           
     });
