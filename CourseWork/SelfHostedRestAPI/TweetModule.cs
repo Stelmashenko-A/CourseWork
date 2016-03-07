@@ -99,44 +99,22 @@ namespace SelfHostedRestAPI
                 };
             };
 
-            Get["/tweets/user-time-line-filtered/{id:long}/{count:int}"] = parameters =>
+            Post["/tweets/user-time-line/last-shown/{value}"] = parameters =>
             {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user-time-line-filtered"));
-            };
+                try
+                {
+                    var id = long.Parse(parameters.value);
+                    var claims = (string) id.ToString();
+                    this.RequiresClaims(new[] {claims});
 
-            Get["/tweets/user-time-line-filtered/{id:long}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "user-time-line-filtered"));
-            };
+                    var lastShown = Request.Headers["LastShown"].First();
 
-            Get["/tweets/not-readed/{id:long}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "not-readed"));
-            };
-
-            Get["/tweets/not-readed/{id:long}/{count:int}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not-readed"));
-            };
-
-            Get["/tweets/not-readed-filtered/{id:long}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(ListTest(5, "not-readed-filtered"));
-            };
-
-            Get["/tweets/not-readed-filtered/{id:long}/{count:int}"] = parameters =>
-            {
-                return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "not-readed-filtered"));
-            };
-
-            Get["/tweets/last-readed-id"] = _ =>
-            {
-                return 12345;
-            };
-
-            Get["/tweets/last-id"] = _ =>
-            {
-                return new JavaScriptSerializer().Serialize(123456);
+                    _storage.SetLastShownId(id, ulong.Parse(lastShown));
+                }
+                catch (Exception e)
+                {
+                }
+                return new Response();
             };
         }
 

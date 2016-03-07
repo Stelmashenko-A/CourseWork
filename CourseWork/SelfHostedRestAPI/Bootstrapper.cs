@@ -32,7 +32,7 @@ namespace SelfHostedRestAPI
                 ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
                     .WithHeader("Access-Control-Allow-Methods", "POST,GET")
                     .WithHeader("Access-Control-Allow-Headers",
-                        "Accept, Origin, Content-type, access-control-allow-origin, password, username, authorization, email, linehead, page, x-pagination,UserId");
+                        "Accept, Origin, Content-type, access-control-allow-origin, password,LastShown, username, authorization, email, linehead, page, x-pagination,UserId");
 
             });
 

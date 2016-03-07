@@ -186,6 +186,18 @@ namespace Repository
             }
         }
 
+        public void SetLastShownId(long userId, ulong statusId)
+        {
+            using (var session = _store.OpenSession())
+            {
+
+                var updated = session.Query<Account>().FirstOrDefault(account => account.TwitterCredentials.UserId == userId);
+                if (updated == null) return;
+                updated.LastReadedTweetId = statusId;
+                AddAccount(updated);
+            }
+        }
+
         public IQueryable<TwitterStatus> GetAllStatuses(long userId)
         {
             using (var session = _store.OpenSession())
