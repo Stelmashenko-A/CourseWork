@@ -1,5 +1,14 @@
 ﻿twittyApp.controller('RegistrationController',
     function RegistrationController($scope, $http, $cookies, $location) {
+        
+        var cookies = $cookies.getAll();
+        var email = cookies.email;
+        var Token = cookies.token;
+        var lastReadedTweetId = cookies.lastReadedTweetId;
+        if (!angular.isUndefined(email) || !angular.isUndefined(Token) || !angular.isUndefined(lastReadedTweetId)) {
+            $location.path("/time-line");
+        }
+        
         $scope.password ='';
         $scope.email = '';
         $scope.regitration = function () {
