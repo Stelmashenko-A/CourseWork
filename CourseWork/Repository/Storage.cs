@@ -90,7 +90,7 @@ namespace Repository
             using (var session = _store.OpenSession())
             {
                 var account = session.Query<Account>().FirstOrDefault(x => x.TwitterCredentials.UserId == id);
-                
+
                 return account?.Following;
             }
         }
@@ -164,22 +164,34 @@ namespace Repository
             {//problem in logic
                 using (var session = _store.OpenSession())
                 {
-                  /*  var skipCounter = 0;
+                    var skipCounter = 0;
                     if (pageHeaderId != -1)
                     {
                         skipCounter = session.Query<TwitterStatus>()
                             .Count(status => status.InternalId > pageHeaderId);
-                        skipCounter -= (pageIndex+1)*pageSize;
+                        skipCounter -= (pageIndex + 1) * pageSize;
                     }
-                    if (skipCounter <= 0)
+                    if (skipCounter < -pageSize)
                     {
-                        return new Page(session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
-                            .Where(status => status.UserIdStr.In(following)).ToList());
-                    }*/
-                    var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
-                        .Where(status => status.UserIdStr.In(following)&&status.InternalId>pageHeaderId)
-                        //.Skip(skipCounter)
+                        return  new Page(new List<TwitterStatus>());
+                    }
+                    if (skipCounter < 0)
+                    {
+                        var f = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                        .Where(status => status.UserIdStr.In(following))
+                        .Take(pageSize+skipCounter)
+                        .ToList();
+                        return new Page(f);
+
+                    }
+                    var r = session.Query<TwitterStatus>()
+                        .Where(status => status.InternalId > pageHeaderId && status.UserIdStr.In(following)).OrderByDescending(x => x.CreatedAt, new DateTimeComparer()).Skip(pageIndex * pageSize)
                         .Take(pageSize).ToList();
+                    var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
+                        .Where(status => status.UserIdStr.In(following))
+                        .Skip(skipCounter)
+                        .Take(pageSize)
+                        .ToList();
                     var page = new Page(t);
                     return page;
                 }
@@ -240,6 +252,6 @@ namespace Repository
 
     }
 }
-   
-    
+
+
 
