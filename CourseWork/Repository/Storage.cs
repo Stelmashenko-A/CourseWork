@@ -161,10 +161,10 @@ namespace Repository
         {
             var following = GetFollowing(userId);
             using (new TransactionScope())
-            {
+            {//problem in logic
                 using (var session = _store.OpenSession())
                 {
-                    var skipCounter = 0;
+                  /*  var skipCounter = 0;
                     if (pageHeaderId != -1)
                     {
                         skipCounter = session.Query<TwitterStatus>()
@@ -175,10 +175,10 @@ namespace Repository
                     {
                         return new Page(session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
                             .Where(status => status.UserIdStr.In(following)).ToList());
-                    }
+                    }*/
                     var t = session.Query<TwitterStatus>().OrderByDescending(x => x.CreatedAt)
-                        .Where(status => status.UserIdStr.In(following))
-                        .Skip(skipCounter)
+                        .Where(status => status.UserIdStr.In(following)&&status.InternalId>pageHeaderId)
+                        //.Skip(skipCounter)
                         .Take(pageSize).ToList();
                     var page = new Page(t);
                     return page;

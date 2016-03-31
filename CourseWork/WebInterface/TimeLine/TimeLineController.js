@@ -1,5 +1,5 @@
 ﻿
-twittyApp.controller('TimeLineController', function ($scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
+twittyApp.controller('TimeLineController', function($scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
     $http(
         {
             method: 'POST',
@@ -9,13 +9,13 @@ twittyApp.controller('TimeLineController', function ($scope, $http, $cookies, Sh
             },
             //url: 'http://192.168.0.9:12008/user/' + $cookies.get("userId")
             url: 'http://127.0.0.1:12008/user/' + $cookies.get("userId")
-        }).success(function (user) {
+        }).success(function(user) {
             $scope.user = user;
             $cookies.put('lastReadedTweetId', $scope.user.LastReadedTweetId);
             $scope.Shown = new Shown();
             //$scope.Unshown = new Unshown();
             $scope.TimelineSynchronizationBlock = new TimelineSynchronizationBlock();
-            window.onscroll = function () {
+            window.onscroll = function() {
                 var updateScrolling = true;
                 var wasUpdated = false;
                 while (updateScrolling) {
@@ -46,7 +46,7 @@ twittyApp.controller('TimeLineController', function ($scope, $http, $cookies, Sh
                                 'LastShown': tweetId,
                                 'Authorization': "Token " + $cookies.get("token")
                             }
-                        }).success(function (data) {
+                        }).success(function(data) {
                             $scope.TimelineSynchronizationBlock.sendedToServer = $scope.TimelineSynchronizationBlock.maxShownId;
                         });
                     }
@@ -55,7 +55,12 @@ twittyApp.controller('TimeLineController', function ($scope, $http, $cookies, Sh
                 var scrolled = window.pageYOffset || document.documentElement.scrollTop;
                 if ($scope.TimelineSynchronizationBlock.scrollMarker > scrolled && !$scope.TimelineSynchronizationBlock.loading && !$scope.TimelineSynchronizationBlock.allIsLoaded) {
                     $scope.TimelineSynchronizationBlock.loading = true;
-
+                    var elemId = $scope.TimelineSynchronizationBlock.maxShownId - 1;
+                    var tweetId = $cookies.get("lastReadedTweetId");
+                    if(elemId!=-1){
+                    var tweet = document.getElementById(elemId);
+                    tweetId = tweet.dataset.item;
+                    }
                     var id = $cookies.get("userId");
                     $http({
                         method: 'POST',
@@ -65,9 +70,11 @@ twittyApp.controller('TimeLineController', function ($scope, $http, $cookies, Sh
                             'Content-Type': 'application/x-www-form-urlencoded',
                             'Page': $scope.TimelineSynchronizationBlock.loadedUnshownPages,
                             'LineHead': $scope.TimelineSynchronizationBlock.timeLineHiader,
-                            'Authorization': "Token " + $cookies.get("token")
+                            'Authorization': "Token " + $cookies.get("token"),
+                            'LastShown': tweetId
                         }
-                    }).success(function (data) {
+                    }).success(function(data) {
+                        $scope.TimelineSynchronizationBlock.sendedToServer = $scope.TimelineSynchronizationBlock.maxShownId;
                         var offset = document.getElementById('anchor' + $scope.TimelineSynchronizationBlock.loadedUnshownPages).offsetTop;
                         $scope.TimelineSynchronizationBlock.loadedUnshownPages++;
                         var items = data.Statuses;

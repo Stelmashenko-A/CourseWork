@@ -82,6 +82,7 @@
     <Compile Include="CredentialsStorage.cs" />
     <Compile Include="Model\InternalCredentials.cs" />
     <Compile Include="Model\Description.cs" />
+    <Compile Include="Model\TimeLine.cs" />
     <Compile Include="Model\TwetterUser.cs" />
     <Compile Include="Model\TwitterContributor.cs" />
     <Compile Include="Model\TwitterCoordinates.cs" />
