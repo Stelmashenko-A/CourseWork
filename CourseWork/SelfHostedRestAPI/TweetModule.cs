@@ -77,8 +77,14 @@ namespace SelfHostedRestAPI
                     return null;
                 }
                 var lineHeadString = Request.Headers["LineHead"].First();
-                var lastShown = Request.Headers["LastShown"].First();
-                _storage.SetLastShownId(id, ulong.Parse(lastShown));
+                try
+                {
+                    var lastShown = Request.Headers["LastShown"].First();
+                    _storage.SetLastShownId(id, ulong.Parse(lastShown));
+                }
+                catch (Exception)
+                {
+                }
                 var page = int.Parse(pageString);
                 var lineHead = long.MaxValue;
                 try
