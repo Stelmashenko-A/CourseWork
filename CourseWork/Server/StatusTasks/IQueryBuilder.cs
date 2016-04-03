@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using LinqToTwitter;
 
 namespace Server.StatusTasks

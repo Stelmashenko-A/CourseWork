@@ -15,14 +15,15 @@ namespace Server
             return new TwitterStatus(new TwitterCoordinates(status.Coordinates.Longitude, status.Coordinates.Latitude),
                 status.Favorited, status.Truncated, status.CreatedAt, status.StatusID.ToString(), Map(status.Entities),
                 status.InReplyToUserID.ToString(), Map(status.Contributors), status.Text, status.RetweetCount,
-                status.InReplyToStatusID.ToString(), (long)status.StatusID, status.Retweeted, status.PossiblySensitive,
-                long.Parse(status.User.UserIDResponse), status.InReplyToScreenName, status.Source,status.User.UserIDResponse);
+                status.InReplyToStatusID.ToString(), (long) status.StatusID, status.Retweeted, status.PossiblySensitive,
+                long.Parse(status.User.UserIDResponse), status.InReplyToScreenName, status.Source,
+                status.User.UserIDResponse);
         }
 
         public IEnumerable<TwitterStatus> Map(IEnumerable<Status> statuses)
         {
             return statuses.Select(Map);
-        } 
+        }
 
         private static TwitterEntities Map(Entities entities)
         {
@@ -36,7 +37,7 @@ namespace Server
                 urlEntity.End);
         }
 
-        static IEnumerable<TwitterUrl> Map(IEnumerable<UrlEntity> urlEntities)
+        private static IEnumerable<TwitterUrl> Map(IEnumerable<UrlEntity> urlEntities)
         {
             return urlEntities.Select(Map);
         }
@@ -53,7 +54,7 @@ namespace Server
 
         private static UserMention Map(UserMentionEntity userMentionEntity)
         {
-            return new UserMention(userMentionEntity.Name, userMentionEntity.ScreenName, (long)userMentionEntity.Id,
+            return new UserMention(userMentionEntity.Name, userMentionEntity.ScreenName, (long) userMentionEntity.Id,
                 userMentionEntity.Id.ToString(), userMentionEntity.Start, userMentionEntity.End);
         }
 

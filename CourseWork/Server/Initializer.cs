@@ -12,7 +12,7 @@ namespace Server
     public class Initializer
     {
         private readonly IStorage _storage;
-        private readonly StatusMapper statusMapper =new StatusMapper();
+        private readonly StatusMapper _statusMapper = new StatusMapper();
 
         protected IList<Status> LoadStatuses(IQueryBuilder queryBuilder, ulong maxId, int count = 3200)
         {
@@ -36,7 +36,7 @@ namespace Server
                 return statuses;
             }
             catch (Exception)
-            { 
+            {
                 //todo concrete exception
                 return new List<Status>();
             }
@@ -61,7 +61,7 @@ namespace Server
             IQueryBuilder queryBuilder = new QueryTimeLineBuilder(context);
 
             var result = LoadStatuses(queryBuilder, account.MinId - 1);
-            result= result.OrderByDescending(x => x.CreatedAt).ToList();
+            result = result.OrderByDescending(x => x.CreatedAt).ToList();
             account.MarkAsInitialized();
             if (result.Count != 0)
             {
@@ -71,13 +71,13 @@ namespace Server
                     account.MaxId = result[0].StatusID;
                 }
             }
-            var following = Followers(context, account.TwitterCredentials.ScreenName);       
+            var following = Followers(context, account.TwitterCredentials.ScreenName);
 
-            
 
-            _storage.AddStatuses(statusMapper.Map(result));
+
+            _storage.AddStatuses(_statusMapper.Map(result));
             _storage.UpdateIdsAccount(account, true);
-            _storage.SetFollowing(account,following);
+            _storage.SetFollowing(account, following);
         }
 
         public void Initialize(IList<Account> accounts)
@@ -90,17 +90,15 @@ namespace Server
 
         protected IList<string> Followers(TwitterContext twitterCtx, string user)
         {
-            Friendship friendship;
-            List<string> result = new List<string>();
+            var result = new List<string>();
             long cursor = -1;
             do
             {
-                friendship =
-                    (from friend in twitterCtx.Friendship
-                     where friend.Type == FriendshipType.FriendsList &&
-                           friend.ScreenName == user &&
-                           friend.Cursor == cursor
-                     select friend)
+                var friendship = (from friend in twitterCtx.Friendship
+                    where friend.Type == FriendshipType.FriendsList &&
+                          friend.ScreenName == user &&
+                          friend.Cursor == cursor
+                    select friend)
                     .SingleOrDefaultAsync().Result;
 
                 if (friendship != null &&
@@ -109,13 +107,13 @@ namespace Server
                 {
                     cursor = friendship.CursorMovement.Next;
 
-                    
+
                 }
 
-                if (friendship != null) result.AddRange(friendship.Users.Select(x=>x.UserIDResponse));
+                if (friendship != null && friendship.Users != null)
+                    result.AddRange(friendship.Users.Select(x => x.UserIDResponse));
             } while (cursor != 0);
-            var s = friendship;
             return result;
-        } 
+        }
     }
 }

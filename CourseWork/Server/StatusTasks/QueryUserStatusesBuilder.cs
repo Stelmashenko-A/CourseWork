@@ -19,19 +19,19 @@ namespace Server.StatusTasks
             if (maxId != uint.MaxValue)
             {
                 return
-                    (from tweet in _twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.Count == count &&
-                              tweet.MaxID == maxId &&
-                              tweet.ScreenName == _screenName
-                        select tweet);
-            }
-            return
-                (from tweet in _twitterContext.Status
+                    from tweet in _twitterContext.Status
                     where tweet.Type == StatusType.User &&
                           tweet.Count == count &&
+                          tweet.MaxID == maxId &&
                           tweet.ScreenName == _screenName
-                    select tweet);
+                    select tweet;
+            }
+            return
+                from tweet in _twitterContext.Status
+                where tweet.Type == StatusType.User &&
+                      tweet.Count == count &&
+                      tweet.ScreenName == _screenName
+                select tweet;
         }
 
         public IQueryable<Status> BuildTaskByMinId(ulong minId = 0, int count = 200)
@@ -39,19 +39,19 @@ namespace Server.StatusTasks
             if (minId == 0)
             {
                 return
-                    (from tweet in _twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.Count == count &&
-                              tweet.ScreenName == _screenName
-                        select tweet);
-            }
-            return
-                (from tweet in _twitterContext.Status
+                    from tweet in _twitterContext.Status
                     where tweet.Type == StatusType.User &&
                           tweet.Count == count &&
-                          tweet.SinceID == minId &&
                           tweet.ScreenName == _screenName
-                    select tweet);
+                    select tweet;
+            }
+            return
+                from tweet in _twitterContext.Status
+                where tweet.Type == StatusType.User &&
+                      tweet.Count == count &&
+                      tweet.SinceID == minId &&
+                      tweet.ScreenName == _screenName
+                select tweet;
         }
 
         public IQueryable<Status> BuildTaskByMinIdAndMaxId(ulong minId = 0, ulong maxId = uint.MaxValue, int count = 200)
@@ -59,41 +59,41 @@ namespace Server.StatusTasks
             if (minId == 0 & maxId == uint.MaxValue)
             {
                 return
-                    (from tweet in _twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.Count == count &&
-                              tweet.ScreenName == _screenName
-                        select tweet);
+                    from tweet in _twitterContext.Status
+                    where tweet.Type == StatusType.User &&
+                          tweet.Count == count &&
+                          tweet.ScreenName == _screenName
+                    select tweet;
             }
             if (minId == 0)
             {
                 return
-                    (from tweet in _twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.Count == count &&
-                              tweet.MaxID == maxId &&
-                              tweet.ScreenName == _screenName
-                        select tweet);
+                    from tweet in _twitterContext.Status
+                    where tweet.Type == StatusType.User &&
+                          tweet.Count == count &&
+                          tweet.MaxID == maxId &&
+                          tweet.ScreenName == _screenName
+                    select tweet;
             }
             if (maxId == 0)
             {
                 return
-                    (from tweet in _twitterContext.Status
-                        where tweet.Type == StatusType.User &&
-                              tweet.Count == count &&
-                              tweet.SinceID == minId && 
-                              tweet.ScreenName == _screenName
-                        select tweet);
+                    from tweet in _twitterContext.Status
+                    where tweet.Type == StatusType.User &&
+                          tweet.Count == count &&
+                          tweet.SinceID == minId && 
+                          tweet.ScreenName == _screenName
+                    select tweet;
             }
 
             return
-                (from tweet in _twitterContext.Status
-                    where tweet.Type == StatusType.User &&
-                          tweet.Count == count &&
-                          tweet.SinceID == minId &&
-                          tweet.MaxID == maxId &&
-                          tweet.ScreenName == _screenName
-                    select tweet);
+                from tweet in _twitterContext.Status
+                where tweet.Type == StatusType.User &&
+                      tweet.Count == count &&
+                      tweet.SinceID == minId &&
+                      tweet.MaxID == maxId &&
+                      tweet.ScreenName == _screenName
+                select tweet;
         }
     }
 }

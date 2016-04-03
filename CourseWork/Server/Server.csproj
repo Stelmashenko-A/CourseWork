@@ -100,9 +100,11 @@
   <ItemGroup>
     <Compile Include="ConsumerToken.cs" />
     <Compile Include="Initializer.cs" />
+    <Compile Include="ReplyLoader.cs" />
     <Compile Include="StatusMapper.cs" />
     <Compile Include="StatusTasks\IQueryBuilder.cs" />
-    <Compile Include="UpDater.cs" />
+    <Compile Include="StatusTasks\TaskBuilder.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="StatusTasks\QueryTimeLineBuilder.cs" />
     <Compile Include="StatusTasks\QueryUserStatusesBuilder.cs" />
     <Compile Include="TwitterContextBuilder.cs" />
