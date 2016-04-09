@@ -1,5 +1,5 @@
 ﻿
-twittyApp.controller('TimeLineController', function($interval,$scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
+twittyApp.controller('TimeLineController', function($interval, $scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
     $http(
         {
             method: 'POST',
@@ -13,36 +13,37 @@ twittyApp.controller('TimeLineController', function($interval,$scope, $http, $co
             $scope.user = user;
             $cookies.put('lastReadedTweetId', $scope.user.LastReadedTweetId);
             $scope.Shown = new Shown();
-            //$scope.Unshown = new Unshown();
             $scope.TimelineSynchronizationBlock = new TimelineSynchronizationBlock();
 
             function updateLastReadedTweetId() {
                 var elemId = $scope.TimelineSynchronizationBlock.maxShownId - 1;
                 var tweet = document.getElementById(elemId);
-                var tweetId = tweet.dataset.item;
-                var id = $cookies.get("userId");
-                $http({
-                    method: 'POST',
-                    //url: 'http://192.168.0.9:12008/tweets/user-time-line/' + id,
-                    url: 'http://127.0.0.1:12008/tweets/user-time-line/last-shown/' + id,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'LastShown': tweetId,
-                        'Authorization': "Token " + $cookies.get("token")
-                    }
-                }).success(function(data) {
-                    $scope.TimelineSynchronizationBlock.sendedToServer = $scope.TimelineSynchronizationBlock.maxShownId;
-                });
+                if (tweet != null) {
+                    var tweetId = tweet.dataset.item;
+                    var id = $cookies.get("userId");
+                    $http({
+                        method: 'POST',
+                        //url: 'http://192.168.0.9:12008/tweets/user-time-line/' + id,
+                        url: 'http://127.0.0.1:12008/tweets/user-time-line/last-shown/' + id,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'LastShown': tweetId,
+                            'Authorization': "Token " + $cookies.get("token")
+                        }
+                    }).success(function(data) {
+                        $scope.TimelineSynchronizationBlock.sendedToServer = $scope.TimelineSynchronizationBlock.maxShownId;
+                    });
+                }
             }
 
-$interval(updateLastReadedTweetId, 5000);
+            $interval(updateLastReadedTweetId, 5000);
 
             window.onscroll = function() {
                 var updateScrolling = true;
                 var wasUpdated = false;
                 while (updateScrolling) {
                     updateScrolling = false;
-                    if ($scope.TimelineSynchronizationBlock.maxShownId < $scope.TimelineSynchronizationBlock.tweetCounter) {
+                    if ($scope.TimelineSynchronizationBlock.maxShownId != null && $scope.TimelineSynchronizationBlock.maxShownId < $scope.TimelineSynchronizationBlock.tweetCounter) {
                         if (document.getElementById($scope.TimelineSynchronizationBlock.maxShownId).offsetTop > window.pageYOffset) {
                             updateScrolling = true;
                             $scope.TimelineSynchronizationBlock.maxShownId++;

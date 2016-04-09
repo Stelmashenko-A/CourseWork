@@ -6,6 +6,7 @@ using Nancy;
 using Nancy.Json;
 using Nancy.Security;
 using Repository;
+using Server;
 using TestData;
 
 namespace SelfHostedRestAPI
@@ -26,16 +27,31 @@ namespace SelfHostedRestAPI
             {
                 return new JavaScriptSerializer().Serialize(ListTest(parameters.count, "user_time_line"));
             };
+
             Post["/tweets/user-time-line/lineHead/{value}"] = parameters =>
             {
                 var id = ulong.Parse(parameters.value);
                 return _storage.GetLineHead(id);
             };
-            Post["/tweets/replies/{value}"] = parameters =>
+
+            Post["/tweets/replies/{userId}/{tweetId}"] = parameters =>
             {
-                var id = ulong.Parse(parameters.value);
-                return _storage.GetLineHead(id);
+                var userId = long.Parse(parameters.userId);
+                var tweetId = ulong.Parse(parameters.tweetId);
+                var claims = (string)userId.ToString();
+                this.RequiresClaims(new[] { claims });
+                var replyLoader = new ReplyLoader();
+
+                var r = replyLoader.LoadReplies(userId, tweetId);
+                JsonSettings.MaxJsonLength = int.MaxValue;
+                var jsonBytes = Encoding.UTF8.GetBytes(new JavaScriptSerializer().Serialize(r));
+                return new Response
+                {
+                    ContentType = "application/json",
+                    Contents = s => s.Write(jsonBytes, 0, jsonBytes.Length)
+                };
             };
+
             Post["/tweets/user-time-line/{value}"] = parameters =>
             {
                 var id = long.Parse(parameters.value);
