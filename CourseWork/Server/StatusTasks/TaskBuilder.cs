@@ -1,6 +1,4 @@
-﻿
-
-using System.Linq;
+﻿using System.Linq;
 using LinqToTwitter;
 
 namespace Server.StatusTasks
@@ -16,18 +14,11 @@ namespace Server.StatusTasks
 
         public IQueryable<Status> BuildRetweetTask(ulong tweetId)
         {
-            var publicTweets =
-
-                (from tweet in _twitterContext.Status
-                    where tweet.Type == StatusType.Retweets &&
-                          tweet.ID == 716202018751266817
-                 select tweet)
-                    .ToList();
             return
-                (from tweet in _twitterContext.Status
-                    where tweet.Type == StatusType.Retweets &&
-                          tweet.ID == tweetId
-                    select tweet);
+                from tweet in _twitterContext.Status
+                where tweet.Type == StatusType.Retweets &&
+                      tweet.ID == tweetId
+                select tweet;
         }
     }
 }

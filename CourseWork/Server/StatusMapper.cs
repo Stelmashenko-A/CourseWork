@@ -8,7 +8,7 @@ using TwitterUrl = Repository.Model.TwitterUrl;
 
 namespace Server
 {
-    internal class StatusMapper
+    public class StatusMapper
     {
         public TwitterStatus Map(Status status)
         {

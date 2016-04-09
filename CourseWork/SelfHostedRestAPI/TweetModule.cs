@@ -31,6 +31,11 @@ namespace SelfHostedRestAPI
                 var id = ulong.Parse(parameters.value);
                 return _storage.GetLineHead(id);
             };
+            Post["/tweets/replies/{value}"] = parameters =>
+            {
+                var id = ulong.Parse(parameters.value);
+                return _storage.GetLineHead(id);
+            };
             Post["/tweets/user-time-line/{value}"] = parameters =>
             {
                 var id = long.Parse(parameters.value);
