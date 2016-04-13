@@ -1,4 +1,5 @@
-﻿<div class="container-fluid" style="padding-top: 51px;">
+﻿<div id="TimeLineController" class="container" ng-controller="TimeLineController">
+<div class="container-fluid" style="padding-top: 51px;">
 
     <div class="row">
         <div class="col-lg-2 col-md-2"></div>
@@ -12,6 +13,7 @@
 
             <!-- Readed timeline -->
             <div infinite-scroll='Shown.nextPage()' infinite-scroll-disabled='Shown.busy' infinite-scroll-distance='0'>
+                <div>
                 <div class="well tweet-well" ng-repeat='item in Shown.items'>
 
                     <div class="row">
@@ -21,7 +23,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-1 tweet-btm">
+                                <div class="col-xs-1 tweet-btm" ng-click="loadReplies(item.IdStr)">
                                     <p><i class="glyphicon glyphicon-bullhorn"></i></p>
                                 </div>
                                 <div class="col-xs-1 tweet-btm">
@@ -34,10 +36,13 @@
 
                         </div>
                     </div>
+                    <div id ="{{item.IdStr}}_reply"></div>
+                </div>
                 </div>
                 <div ng-show='Shown.busy'>Loading data...</div>
             </div>
         </div>
         <div class="col-lg-2 col-md-2"></div>
     </div>
+</div>
 </div>

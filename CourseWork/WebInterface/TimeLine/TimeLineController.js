@@ -1,5 +1,8 @@
 ﻿
-twittyApp.controller('TimeLineController', function($interval, $scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
+twittyApp.controller('TimeLineController', function($rootScope, $interval, $scope, $http, $cookies, Shown, TimelineSynchronizationBlock, TweetViewBuilder) {
+    
+    
+    
     $http(
         {
             method: 'POST',
@@ -10,6 +13,8 @@ twittyApp.controller('TimeLineController', function($interval, $scope, $http, $c
             //url: 'http://192.168.0.9:12008/user/' + $cookies.get("userId")
             url: 'http://127.0.0.1:12008/user/' + $cookies.get("userId")
         }).success(function(user) {
+            
+            
             $scope.user = user;
             $cookies.put('lastReadedTweetId', $scope.user.LastReadedTweetId);
             $scope.Shown = new Shown();
@@ -62,6 +67,8 @@ twittyApp.controller('TimeLineController', function($interval, $scope, $http, $c
                         tweetId = tweet.dataset.item;
                     }
                     var id = $cookies.get("userId");
+                    
+                    
                     $http({
                         method: 'POST',
                         //url: 'http://192.168.0.9:12008/tweets/user-time-line/' + id,
@@ -86,7 +93,8 @@ twittyApp.controller('TimeLineController', function($interval, $scope, $http, $c
                         var innerHtml = "<div id='anchor" + $scope.TimelineSynchronizationBlock.loadedUnshownPages + "'></div>";
                         $scope.TimelineSynchronizationBlock.tweetCounter += items.length;
                         for (var i = 0; i < items.length; i++) {
-                            innerHtml += TweetViewBuilder.buildHtml(items[i].Text, $scope.TimelineSynchronizationBlock.tweetCounter - i, items[i].IdStr);
+                            innerHtml += TweetViewBuilder.buildTweetHtml(items[i].Text,
+                            $scope.TimelineSynchronizationBlock.tweetCounter - i, items[i].IdStr);
                         }
 
                         document.getElementById('unshown').innerHTML = innerHtml + document.getElementById('unshown').innerHTML;
@@ -96,5 +104,39 @@ twittyApp.controller('TimeLineController', function($interval, $scope, $http, $c
                     });
                 }
             }
+            
+            
+            var loadReplies = function (statusId) {
+                
+                if(document.getElementById(statusId+"_reply").innerHTML===""){
+                    var id = $cookies.get("userId");
+                $http({
+                        method: 'POST',
+                        //url: 'http://192.168.0.9:12008/tweets/user-time-line/' + id,
+                        url: 'http://127.0.0.1:12008/tweets/replies/' + id+'/'+statusId,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Authorization': "Token " + $cookies.get("token")
+                        }
+                    }).success(function(items) {
+                      
+                        if (items.length == 0) {
+                            return;
+                        }
+                        var innerHtml = "";
+                        for (var i = 0; i < items.length; i++) {
+                            innerHtml += TweetViewBuilder.buildRelpyHtml(items[i].Text);
+                        }
+
+                        document.getElementById(statusId+"_reply").innerHTML = innerHtml;
+                        
+                    });
+                }
+            }
+            $rootScope.loadReplies = loadReplies;
+            
         })
 });
+
+
+

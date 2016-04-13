@@ -23,7 +23,7 @@ function TweetViewBuilder() {
                 "</div>";
     this.currentID = 0;
 }
-    TweetViewBuilder.buildHtml = function (text, id, twetterID) {
+    TweetViewBuilder.buildTweetHtml = function (text, id, twetterID) {
         var res ="<div id='" + id + "' data-item= '" + twetterID + "'class=\"well tweet-well\">"+
                     "<div class=\"row\">"+
                         "<div class=\"twitt\">"+
@@ -46,5 +46,8 @@ function TweetViewBuilder() {
                 "</div>";
         return res;
     };   
+    TweetViewBuilder.buildRelpyHtml = function (text) {
+        return "<div>"+text+"</div>";
+    }
     return TweetViewBuilder;
 });
