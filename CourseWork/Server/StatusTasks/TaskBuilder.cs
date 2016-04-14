@@ -13,11 +13,13 @@ namespace Server.StatusTasks
             _twitterContext = twitterContext;
         }
 
-        public List<Status> BuildRetweetTask(ulong userId, ulong statusId)
+        public List<Status> BuildRetweetTask(string userName, ulong statusId)
         {
             var singleOrDefault = (from search in _twitterContext.Search
                 where search.Type == SearchType.Search &&
-                      search.Query == "\"to:NASA\""
+                      search.Query == "\"to:" + userName + "\"" &&
+                      search.Count == 100 &&
+                      search.SinceID == statusId
                                    select search).SingleOrDefault();
             if (singleOrDefault != null)
             {

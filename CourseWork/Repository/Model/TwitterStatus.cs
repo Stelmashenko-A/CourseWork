@@ -8,7 +8,7 @@ namespace Repository.Model
         public TwitterStatus(TwitterCoordinates coordinates, bool favorited, bool truncated, DateTime createdAt,
             string idStr, TwitterEntities twitterEntities, string inReplyToUserIdStr, IEnumerable<TwitterContributor> contributors,
             string text, int retweetCount, string inReplyToStatusIdStr, long id, bool retweeted, bool possiblySensitive,
-            long userId, string inReplyToScreenName, string source, string userIdStr)
+            long userId, string inReplyToScreenName, string source, string userIdStr, string userName)
         {
             Coordinates = coordinates;
             Favorited = favorited;
@@ -29,6 +29,7 @@ namespace Repository.Model
             Source = source;
             UserIdStr = userIdStr;
             InternalId = Id;
+            UserName = userName;
         }
         internal long InternalId { get; }
         public TwitterCoordinates Coordinates { get; }
@@ -50,5 +51,6 @@ namespace Repository.Model
         public string UserIdStr { get; }
         public string InReplyToScreenName { get; }
         public string Source { get; }
+        public string UserName { get; }
     }
 }
