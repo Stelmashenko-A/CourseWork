@@ -210,6 +210,14 @@ namespace Repository
             }
         }
 
+        public TwitterStatus GetTweeById(ulong tweetId)
+        {
+            using (var session = _store.OpenSession())
+            {
+                return session.Query<TwitterStatus>().FirstOrDefault(status => status.IdStr == tweetId.ToString());
+            }
+        }
+
         public IQueryable<TwitterStatus> GetAllStatuses(long userId)
         {
             using (var session = _store.OpenSession())

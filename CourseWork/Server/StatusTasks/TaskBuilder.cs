@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using LinqToTwitter;
 
 namespace Server.StatusTasks
@@ -12,13 +13,17 @@ namespace Server.StatusTasks
             _twitterContext = twitterContext;
         }
 
-        public IQueryable<Status> BuildRetweetTask(ulong tweetId)
+        public List<Status> BuildRetweetTask(ulong userId, ulong statusId)
         {
-            return
-                from tweet in _twitterContext.Status
-                where tweet.Type == StatusType.Retweets &&
-                      tweet.ID == tweetId
-                select tweet;
+            var singleOrDefault = (from search in _twitterContext.Search
+                where search.Type == SearchType.Search &&
+                      search.Query == "\"to:NASA\""
+                                   select search).SingleOrDefault();
+            if (singleOrDefault != null)
+            {
+                return singleOrDefault.Statuses;
+            }
+            return new List<Status>();
         }
     }
 }
