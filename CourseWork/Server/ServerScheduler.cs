@@ -25,7 +25,7 @@ namespace Server
             var trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
                 (s =>
-                    s.WithIntervalInMinutes(15)
+                    s.WithIntervalInMinutes(1)
                         .OnEveryDay()
                         .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
                 )
